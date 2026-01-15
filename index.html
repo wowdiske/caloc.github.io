@@ -1134,12 +1134,14 @@
 <section class="section-pb pt-60p">
     <div class="container">
         <h2 class="heading-2 text-w-neutral-1 mb-40p">
-            Tienda
+            Browse Marketplace
         </h2>
         <div x-data="{ activeTab: 1 }">
             <div class="flex items-center justify-between flex-wrap gap-24p pb-30p border-b border-shap">
-                <div class="flex items-center max-sm:justify-center overflow-x-auto scrollbar-0 max-w-[680px] ">
-                    <div class="flex flex-wrap gap-2 text-base text-w-neutral-1 *:rounded-12 *:px-32p *:py-3 whitespace-nowrap">
+                <form class="select-1 shrink-0">
+                </form>
+                <div class="flex items-center justify-center overflow-x-auto scrollbar-0 w-full">
+                    <div class="flex flex-wrap justify-center gap-2 text-base text-w-neutral-1 *:rounded-12 *:px-32p *:py-3 whitespace-nowrap">
                         <button @click="activeTab = 1"
                             :class="activeTab == 1 ? 'bg-b-neutral-2' : 'bg-b-neutral-3'">
                             All
@@ -1183,984 +1185,2087 @@
                     </div>
                 </div>
             </div>
+            <!-- ... resto del código permanece igual ... -->
             <div class="mt-60p">
+                <!-- TAB 1: ALL -->
                 <div x-show="activeTab == 1" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
 
+                        <!-- Steam Wallet Code (USD) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Steam</span>
                                 </span>
                                 <img src="assets/images/gifcard/steam.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Steam Wallet Code (USD)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Steam Wallet Code (USD)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Steam Wallet Code (USD)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Steam Wallet Code (USD)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (91)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Valorant USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Riot Games</span>
                                 </span>
                                 <img src="assets/images/gifcard/riot.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Valorant USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Valorant USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Valorant USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Valorant USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (119)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Playstation Brazil -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Playstation</span>
                                 </span>
                                 <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Playstation Brazil" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Playstation Brazil" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Playstation Brazil</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Playstation Brazil</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (127)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Nintendo USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (83)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Steam Wallet Code (EU) -->
+                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
+                            data-aos="zoom-in">
+                            <div class="overflow-hidden">
+                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
+                                    <i class="avatar avatar-primary size-3"></i>
+                                    <span class="text-s-regular text-w-neutral-1">Steam</span>
+                                </span>
+                                <img src="assets/images/gifcard/steam.png"
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Steam Wallet Code (EU)" />
+                            </div>
+                            <div class="p-28p">
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Steam Wallet Code (EU)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (113)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Steam Wallet Code (Mexico) -->
+                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
+                            data-aos="zoom-in">
+                            <div class="overflow-hidden">
+                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
+                                    <i class="avatar avatar-primary size-3"></i>
+                                    <span class="text-s-regular text-w-neutral-1">Steam</span>
+                                </span>
+                                <img src="assets/images/gifcard/steam.png"
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Steam Wallet Code (Mexico)" />
+                            </div>
+                            <div class="p-28p">
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Steam Wallet Code (Mexico)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (101)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Steam Wallet Code (Brazil) -->
+                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
+                            data-aos="zoom-in">
+                            <div class="overflow-hidden">
+                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
+                                    <i class="avatar avatar-primary size-3"></i>
+                                    <span class="text-s-regular text-w-neutral-1">Steam</span>
+                                </span>
+                                <img src="assets/images/gifcard/steam.png"
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Steam Wallet Code (Brazil)" />
+                            </div>
+                            <div class="p-28p">
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Steam Wallet Code (Brazil)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (129)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Blizzard (Battle.net) USA -->
+                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
+                            data-aos="zoom-in">
+                            <div class="overflow-hidden">
+                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
+                                    <i class="avatar avatar-primary size-3"></i>
+                                    <span class="text-s-regular text-w-neutral-1">Blizzard</span>
+                                </span>
+                                <img src="assets/images/gifcard/blizzard.png"
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Blizzard (Battle.net) USA" />
+                            </div>
+                            <div class="p-28p">
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Blizzard (Battle.net) USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.5 (79)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
+                
+                <!-- TAB 2: STEAM -->
                 <div x-show="activeTab == 2" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
+                        <!-- Steam Wallet Code (USD) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Steam</span>
                                 </span>
                                 <img src="assets/images/gifcard/steam.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Steam Wallet Code (USD)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Steam Wallet Code (USD)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Steam Wallet Code (USD)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Steam Wallet Code (USD)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (91)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Steam Wallet Code (EU) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Steam</span>
                                 </span>
                                 <img src="assets/images/gifcard/steam.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Steam Wallet Code (EU)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Steam Wallet Code (EU)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Steam Wallet Code (EU)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Steam Wallet Code (EU)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (113)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Steam Wallet Code (Mexico) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Steam</span>
                                 </span>
                                 <img src="assets/images/gifcard/steam.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Steam Wallet Code (Mexico)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Steam Wallet Code (Mexico)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Steam Wallet Code (Mexico)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Steam Wallet Code (Mexico)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (101)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Steam Wallet Code (Brazil) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Steam</span>
                                 </span>
                                 <img src="assets/images/gifcard/steam.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Steam Wallet Code (Brazil)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Steam Wallet Code (Brazil)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Steam Wallet Code (Brazil)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Steam Wallet Code (Brazil)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (129)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- TAB 3: BLIZZARD -->
                 <div x-show="activeTab == 3" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
-
+                        <!-- Blizzard (Battle.net) USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Blizzard</span>
                                 </span>
                                 <img src="assets/images/gifcard/blizzard.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Blizzard (Battle.net) USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Blizzard (Battle.net) USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Blizzard (Battle.net) USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Blizzard (Battle.net) USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.5 (79)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Blizzard (Battle.net) EU -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Blizzard</span>
                                 </span>
                                 <img src="assets/images/gifcard/blizzard.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Blizzard (Battle.net) EU" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Blizzard (Battle.net) EU" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Blizzard (Battle.net) EU</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Blizzard (Battle.net) EU</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (85)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Blizzard (Battle.net) Brazil -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Blizzard</span>
                                 </span>
                                 <img src="assets/images/gifcard/blizzard.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Blizzard (Battle.net) Brazil" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Blizzard (Battle.net) Brazil" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Blizzard (Battle.net) Brazil</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Blizzard (Battle.net) Brazil</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (117)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Blizzard (Battle.net) Mexico -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Blizzard</span>
                                 </span>
                                 <img src="assets/images/gifcard/blizzard.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Blizzard (Battle.net) Mexico" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Blizzard (Battle.net) Mexico" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Blizzard (Battle.net) Mexico</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Blizzard (Battle.net) Mexico</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (105)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                
+                <!-- TAB 4: PLAYSTATION -->
                 <div x-show="activeTab == 4" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
-
+                        <!-- Playstation USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Playstation</span>
                                 </span>
                                 <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Playstation USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Playstation USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Playstation USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Playstation USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (121)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Playstation Spain -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Playstation</span>
                                 </span>
                                 <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Playstation Spain" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Playstation Spain" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Playstation Spain</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Playstation Spain</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (133)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Playstation Brazil -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Playstation</span>
                                 </span>
                                 <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Playstation Brazil" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Playstation Brazil" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Playstation Brazil</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Playstation Brazil</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (127)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Playstation Mexico -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Playstation</span>
                                 </span>
                                 <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Playstation Mexico" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Playstation Mexico" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Playstation Mexico</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Playstation Mexico</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (109)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Playstation Argentina -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Playstation</span>
                                 </span>
                                 <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Playstation Argentina" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Playstation Argentina" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Playstation Argentina</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Playstation Argentina</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (87)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Playstation Colombia -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Playstation</span>
                                 </span>
                                 <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Playstation Colombia" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Playstation Colombia" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Playstation Colombia</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Playstation Colombia</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (123)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                
+                <!-- TAB 5: ROBLOX -->
                 <div x-show="activeTab == 5" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
+                        <!-- ROBLOX EUROPE -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Roblox</span>
                                 </span>
                                 <img src="assets/images/gifcard/roblox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="ROBLOX EUROPE" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="ROBLOX EUROPE" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">ROBLOX EUROPE</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">ROBLOX EUROPE</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (135)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- ROBLOX (USD - USA) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Roblox</span>
                                 </span>
                                 <img src="assets/images/gifcard/roblox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="ROBLOX (USD - USA)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="ROBLOX (USD - USA)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">ROBLOX (USD - USA)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">ROBLOX (USD - USA)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (99)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- ROBLOX Spain -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Roblox</span>
                                 </span>
                                 <img src="assets/images/gifcard/roblox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="ROBLOX Spain" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="ROBLOX Spain" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">ROBLOX Spain</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">ROBLOX Spain</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (115)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- ROBLOX Mexico -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Roblox</span>
                                 </span>
                                 <img src="assets/images/gifcard/roblox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="ROBLOX Mexico" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="ROBLOX Mexico" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">ROBLOX Mexico</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">ROBLOX Mexico</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (131)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Roblox Premium Global -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Roblox</span>
                                 </span>
                                 <img src="assets/images/gifcard/roblox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Roblox Premium Global" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Roblox Premium Global" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Roblox Premium Global</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Roblox Premium Global</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (89)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                
+                <!-- TAB 6: RIOT GAMES -->
                 <div x-show="activeTab == 6" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
+                        <!-- Valorant USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Riot Games</span>
                                 </span>
                                 <img src="assets/images/gifcard/riot.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Valorant USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Valorant USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Valorant USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Valorant USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (119)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Valorant Brazil -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Riot Games</span>
                                 </span>
                                 <img src="assets/images/gifcard/riot.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Valorant Brazil" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Valorant Brazil" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Valorant Brazil</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Valorant Brazil</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (107)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Riot Point (LoL / Valorant) (USD - Global) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Riot Games</span>
                                 </span>
                                 <img src="assets/images/gifcard/riot.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Riot Point (LoL / Valorant) (USD - Global)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Riot Point (LoL / Valorant) (USD - Global)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Riot Point (LoL / Valorant) (USD - Global)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Riot Point (LoL / Valorant) (USD - Global)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (125)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Riot Point (LoL / Valorant) (EUR - Europe) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Riot Games</span>
                                 </span>
                                 <img src="assets/images/gifcard/riot.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Riot Point (LoL / Valorant) (EUR - Europe)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Riot Point (LoL / Valorant) (EUR - Europe)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Riot Point (LoL / Valorant) (EUR - Europe)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Riot Point (LoL / Valorant) (EUR - Europe)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (93)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                
+                <!-- TAB 7: NINTENDO -->
                 <div x-show="activeTab == 7" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
-
+                        <!-- Nintendo USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (83)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Nintendo Brazil -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo Brazil" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo Brazil" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo Brazil</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo Brazil</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (95)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Nintendo Mexico -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo Mexico" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo Mexico" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo Mexico</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo Mexico</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (111)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Nintendo Spain -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo Spain" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo Spain" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo Spain</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo Spain</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (137)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Nintendo Membership 12 Month USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo Membership 12 Month USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo Membership 12 Month USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo Membership 12 Month USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo Membership 12 Month USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (103)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Nintendo Membership 3 Month USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo Membership 3 Month USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo Membership 3 Month USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo Membership 3 Month USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo Membership 3 Month USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (119)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Nintendo Switch Membership (EUR - Europe) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo Switch Membership (EUR - Europe)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo Switch Membership (EUR - Europe)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo Switch Membership (EUR - Europe)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo Switch Membership (EUR - Europe)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (97)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Nintendo eShop Currency (EUR - Europe) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Nintendo</span>
                                 </span>
                                 <img src="assets/images/gifcard/nintendo.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Nintendo eShop Currency (EUR - Europe)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Nintendo eShop Currency (EUR - Europe)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Nintendo eShop Currency (EUR - Europe)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Nintendo eShop Currency (EUR - Europe)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (121)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                
+                <!-- TAB 8: MINECRAFT -->
                 <div x-show="activeTab == 8" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
+                        <!-- Minecraft Minecoins (Global) -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Minecraft</span>
                                 </span>
                                 <img src="assets/images/gifcard/minecraft.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Minecraft Minecoins (Global)" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Minecraft Minecoins (Global)" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Minecraft Minecoins (Global)</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Minecraft Minecoins (Global)</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (91)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Minecraft Mexico MXN -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Minecraft</span>
                                 </span>
                                 <img src="assets/images/gifcard/minecraft.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Minecraft Mexico MXN" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Minecraft Mexico MXN" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Minecraft Mexico MXN</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Minecraft Mexico MXN</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (133)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                
+                <!-- TAB 9: FREE FIRE -->
                 <div x-show="activeTab == 9" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
+                        <!-- Free Fire Diamonds -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Free Fire</span>
                                 </span>
                                 <img src="assets/images/gifcard/freefire.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Free Fire Diamonds" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Free Fire Diamonds" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Free Fire Diamonds</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Free Fire Diamonds</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (115)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Garena Free Fire Mena Region -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Free Fire</span>
                                 </span>
                                 <img src="assets/images/gifcard/freefire.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Garena Free Fire Mena Region" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Garena Free Fire Mena Region" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Garena Free Fire Mena Region</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Garena Free Fire Mena Region</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (87)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                
+                <!-- TAB 10: XBOX -->
                 <div x-show="activeTab == 10" x-transition>
                     <div class="grid 3xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-30p">
+                        <!-- Xbox Mexico -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Xbox</span>
                                 </span>
                                 <img src="assets/images/gifcard/xbox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Xbox Mexico" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Xbox Mexico" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Xbox Mexico</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Xbox Mexico</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.7 (105)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Xbox Brazil -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Xbox</span>
                                 </span>
                                 <img src="assets/images/gifcard/xbox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Xbox Brazil" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Xbox Brazil" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Xbox Brazil</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Xbox Brazil</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.9 (131)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Xbox Game Pass Subscriptions USA -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Xbox</span>
                                 </span>
                                 <img src="assets/images/gifcard/xbox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Xbox Game Pass Subscriptions USA" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Xbox Game Pass Subscriptions USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Xbox Game Pass Subscriptions USA</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Xbox Game Pass Subscriptions USA</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.8 (117)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- Xbox Subscriptions Global -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
                             data-aos="zoom-in">
                             <div class="overflow-hidden">
                                 <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <img src="assets/images/icons/logo2.png" class="avatar avatar-primary size-3" alt="CarryLoot" />
+                                    <i class="avatar avatar-primary size-3"></i>
                                     <span class="text-s-regular text-w-neutral-1">Xbox</span>
                                 </span>
                                 <img src="assets/images/gifcard/xbox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1 select-none pointer-events-none draggable-false"
-                                    alt="Xbox Subscriptions Global" 
-                                    draggable="false"
-                                    onmousedown="return false"
-                                    onselectstart="return false"
-                                    oncontextmenu="return false" />
+                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
+                                    alt="Xbox Subscriptions Global" />
                             </div>
                             <div class="p-28p">
-                                <a href="cardsteamusa.html"
-                                    class="badge badge-md badge-primary text-base">Xbox Subscriptions Global</a>
+                                <a href="marketplace-details.html"
+                                    class="heading-3 link-1 mb-2 line-clamp-1">Xbox Subscriptions Global</a>
+                                <p class="text-l-regular text-w-neutral-2">
+                                    Starting at $ <span class="span">7.50</span>
+                                </p>
+                                <div class="flex-y gap-2 my-24p">
+                                    <div class="flex-y gap-1 text-primary icon-24">
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-filled"></i>
+                                        <i class="ti ti-star-half-filled"></i>
+                                    </div>
+                                    <p class="text-base text-w-neutral-1">4.6 (95)</p>
+                                </div>
+                                <div class="flex-y flex-wrap gap-3">
+                                    <img class="size-60p rounded-full shrink-0"
+                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
+                                    <div>
+                                        <a href="profile.html"
+                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
+                                            <span>CarryLoot</span>
+                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
+                                        </a>
+                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+            </div>
+
             </div>
         </div>
     </div>
 </section>
 <!-- marketplace section end -->
-
-<style>
-/* Añade estos estilos para asegurar que nada sea arrastrable o seleccionable */
-.draggable-false, 
-img[src*="gifcard/"], 
-img[src*="gifcard/"] ~ * {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    touch-action: none;
-}
-
-/* También asegurar que los contenedores no permitan arrastrar */
-.relative.bg-b-neutral-3.rounded-24.group.overflow-hidden {
-    -webkit-user-drag: none;
-    user-drag: none;
-}
-</style>
 
 
             <!-- hero section start -->
