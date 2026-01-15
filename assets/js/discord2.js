@@ -49,7 +49,7 @@ async function sendGoldNotificationToDiscord() {
         const serverName = orderData.server || currentServer;
         
         // ID del usuario de Discord a etiquetar - TU ID
-        const USER_ID_TO_MENTION = '442921280954433536';
+        const USER_ID_TO_MENTION = '446359515839856641';
         
         // Crear el mensaje con etiqueta
         const message = {
