@@ -644,7 +644,7 @@
                             :class="activeTab == 6 ? 'bg-b-neutral-2' : 'bg-b-neutral-3' ">
                             Riot Games
                         </button>
-                        <button @click="activeTab = 7"
+                        <button @click="activeTab = 7" style="display: none;"
                             :class="activeTab == 7 ? 'bg-b-neutral-2' : 'bg-b-neutral-3' ">
                             Nintendo
                         </button>
@@ -656,7 +656,7 @@
                             :class="activeTab == 9 ? 'bg-b-neutral-2' : 'bg-b-neutral-3' ">
                             Free Fire
                         </button>
-                        <button @click="activeTab = 10"
+                        <button @click="activeTab = 10" style="display: none;"
                             :class="activeTab == 10 ? 'bg-b-neutral-2' : 'bg-b-neutral-3' ">
                             Xbox
                         </button>
@@ -792,20 +792,20 @@
     </div>
 </div>
 
-<!-- Nintendo USA -->
+<!-- Roblox (USD - USA) -->
 <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
     data-aos="zoom-in">
     <div class="overflow-hidden">
         <span class="badge badge-neutral absolute top-3 left-3 z-10">
             <i class="avatar avatar-primary size-3"></i>
-            <span class="text-s-regular text-w-neutral-1">Nintendo</span>
+            <span class="text-s-regular text-w-neutral-1">Roblox (USD - USA)</span>
         </span>
-        <img src="assets/images/gifcard/nintendo.png"
+        <img src="assets/images/gifcard/roblox.png"
             class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
-            alt="Nintendo USA" />
+            alt="Roblox (USD - USA)" />
     </div>
     <div class="p-28p">
-        <div class="heading-5 link-1 mb-2 line-clamp-1 cursor-pointer" @click="activeTab = 7">Nintendo USA</div>
+        <div class="heading-5 link-1 mb-2 line-clamp-1 cursor-pointer" @click="activeTab = 5">Roblox (USD - USA)</div>
         <p class="text-l-regular text-w-neutral-2">
             Precios desde $ <span class="span">7.50</span>
         </p>
@@ -1111,134 +1111,6 @@
                         </div>
 
 
-                        <!-- Playstation Mexico -->
-                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
-                            data-aos="zoom-in">
-                            <div class="overflow-hidden">
-                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <i class="avatar avatar-primary size-3"></i>
-                                    <span class="text-s-regular text-w-neutral-1">Playstation</span>
-                                </span>
-                                <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
-                                    alt="Playstation Mexico" />
-                            </div>
-                            <div class="p-28p">
-                                <a href="marketplace-details.html"
-                                    class="heading-5 link-1 mb-2 line-clamp-1">Playstation Mexico</a>
-                                <p class="text-l-regular text-w-neutral-2">
-                                    Precios desde $ <span class="span">7.50</span>
-                                </p>
-                                <div class="flex-y gap-2 my-24p">
-                                    <div class="flex-y gap-1 text-primary icon-24">
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-half-filled"></i>
-                                    </div>
-                                    <p class="text-base text-w-neutral-1">4.7 (109)</p>
-                                </div>
-                                <div class="flex-y flex-wrap gap-3">
-                                    <img class="size-60p rounded-full shrink-0"
-                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
-                                    <div>
-                                        <a href="https://discord.gg/eWDcXJx8BC"
-                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
-                                            <span>CarryLoot</span>
-                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
-                                        </a>
-                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Playstation Argentina -->
-                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
-                            data-aos="zoom-in">
-                            <div class="overflow-hidden">
-                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <i class="avatar avatar-primary size-3"></i>
-                                    <span class="text-s-regular text-w-neutral-1">Playstation</span>
-                                </span>
-                                <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
-                                    alt="Playstation Argentina" />
-                            </div>
-                            <div class="p-28p">
-                                <a href="marketplace-details.html"
-                                    class="heading-5 link-1 mb-2 line-clamp-1">Playstation Argentina</a>
-                                <p class="text-l-regular text-w-neutral-2">
-                                    Precios desde $ <span class="span">7.50</span>
-                                </p>
-                                <div class="flex-y gap-2 my-24p">
-                                    <div class="flex-y gap-1 text-primary icon-24">
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-half-filled"></i>
-                                    </div>
-                                    <p class="text-base text-w-neutral-1">4.6 (87)</p>
-                                </div>
-                                <div class="flex-y flex-wrap gap-3">
-                                    <img class="size-60p rounded-full shrink-0"
-                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
-                                    <div>
-                                        <a href="https://discord.gg/eWDcXJx8BC"
-                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
-                                            <span>CarryLoot</span>
-                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
-                                        </a>
-                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Playstation Colombia -->
-                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
-                            data-aos="zoom-in">
-                            <div class="overflow-hidden">
-                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <i class="avatar avatar-primary size-3"></i>
-                                    <span class="text-s-regular text-w-neutral-1">Playstation</span>
-                                </span>
-                                <img src="assets/images/gifcard/playstation.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
-                                    alt="Playstation Colombia" />
-                            </div>
-                            <div class="p-28p">
-                                <a href="marketplace-details.html"
-                                    class="heading-5 link-1 mb-2 line-clamp-1">Playstation Colombia</a>
-                                <p class="text-l-regular text-w-neutral-2">
-                                    Precios desde $ <span class="span">7.50</span>
-                                </p>
-                                <div class="flex-y gap-2 my-24p">
-                                    <div class="flex-y gap-1 text-primary icon-24">
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-half-filled"></i>
-                                    </div>
-                                    <p class="text-base text-w-neutral-1">4.8 (123)</p>
-                                </div>
-                                <div class="flex-y flex-wrap gap-3">
-                                    <img class="size-60p rounded-full shrink-0"
-                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
-                                    <div>
-                                        <a href="https://discord.gg/eWDcXJx8BC"
-                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
-                                            <span>CarryLoot</span>
-                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
-                                        </a>
-                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
@@ -1258,7 +1130,7 @@
                                     alt="ROBLOX EUROPE" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardrobloxeu.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">ROBLOX EUROPE</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
@@ -1301,7 +1173,7 @@
                                     alt="ROBLOX (USD - USA)" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardrobloxusa.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">ROBLOX (USD - USA)</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
@@ -1331,91 +1203,6 @@
                             </div>
                         </div>
 
-                        <!-- ROBLOX Spain -->
-                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
-                            data-aos="zoom-in">
-                            <div class="overflow-hidden">
-                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <i class="avatar avatar-primary size-3"></i>
-                                    <span class="text-s-regular text-w-neutral-1">Roblox</span>
-                                </span>
-                                <img src="assets/images/gifcard/roblox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
-                                    alt="ROBLOX Spain" />
-                            </div>
-                            <div class="p-28p">
-                                <a href="marketplace-details.html"
-                                    class="heading-5 link-1 mb-2 line-clamp-1">ROBLOX Spain</a>
-                                <p class="text-l-regular text-w-neutral-2">
-                                    Precios desde $ <span class="span">7.50</span>
-                                </p>
-                                <div class="flex-y gap-2 my-24p">
-                                    <div class="flex-y gap-1 text-primary icon-24">
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-half-filled"></i>
-                                    </div>
-                                    <p class="text-base text-w-neutral-1">4.8 (115)</p>
-                                </div>
-                                <div class="flex-y flex-wrap gap-3">
-                                    <img class="size-60p rounded-full shrink-0"
-                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
-                                    <div>
-                                        <a href="https://discord.gg/eWDcXJx8BC"
-                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
-                                            <span>CarryLoot</span>
-                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
-                                        </a>
-                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ROBLOX Mexico -->
-                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
-                            data-aos="zoom-in">
-                            <div class="overflow-hidden">
-                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <i class="avatar avatar-primary size-3"></i>
-                                    <span class="text-s-regular text-w-neutral-1">Roblox</span>
-                                </span>
-                                <img src="assets/images/gifcard/roblox.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
-                                    alt="ROBLOX Mexico" />
-                            </div>
-                            <div class="p-28p">
-                                <a href="marketplace-details.html"
-                                    class="heading-5 link-1 mb-2 line-clamp-1">ROBLOX Mexico</a>
-                                <p class="text-l-regular text-w-neutral-2">
-                                    Precios desde $ <span class="span">7.50</span>
-                                </p>
-                                <div class="flex-y gap-2 my-24p">
-                                    <div class="flex-y gap-1 text-primary icon-24">
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                    </div>
-                                    <p class="text-base text-w-neutral-1">4.9 (131)</p>
-                                </div>
-                                <div class="flex-y flex-wrap gap-3">
-                                    <img class="size-60p rounded-full shrink-0"
-                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
-                                    <div>
-                                        <a href="https://discord.gg/eWDcXJx8BC"
-                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
-                                            <span>CarryLoot</span>
-                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
-                                        </a>
-                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Roblox Premium Global -->
                         <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
@@ -1478,7 +1265,7 @@
                                     alt="Valorant USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardvalorantusa.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">Valorant USA</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
@@ -1521,7 +1308,7 @@
                                     alt="Valorant USA" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardvaloranteu.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">Valorant EU</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
@@ -1564,7 +1351,7 @@
                                     alt="Riot Point (LoL / Valorant) (USD - Global)" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardriotpointsusa.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">Riot Point (LoL / Valorant) (USD - Global)</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
@@ -1607,7 +1394,7 @@
                                     alt="Riot Point (LoL / Valorant) (EUR - Europe)" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardriotpointseu.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">Riot Point (LoL / Valorant) (EUR - Europe)</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
@@ -2004,7 +1791,7 @@
                                     alt="Minecraft Minecoins (Global)" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardminecraftusa.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">Minecraft Minecoins (Global)</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
@@ -2034,48 +1821,7 @@
                             </div>
                         </div>
 
-                        <!-- Minecraft Mexico MXN -->
-                        <div class="relative bg-b-neutral-3 rounded-24 group overflow-hidden w-full h-full "
-                            data-aos="zoom-in">
-                            <div class="overflow-hidden">
-                                <span class="badge badge-neutral absolute top-3 left-3 z-10">
-                                    <i class="avatar avatar-primary size-3"></i>
-                                    <span class="text-s-regular text-w-neutral-1">Minecraft</span>
-                                </span>
-                                <img src="assets/images/gifcard/minecraft.png"
-                                    class="w-full 3xl:h-[310px] xl:h-[280px] lg:h-[260px] h-[240px] object-cover object-top group-hover:scale-110 group-hover:rotate-2 transition-1"
-                                    alt="Minecraft Mexico MXN" />
-                            </div>
-                            <div class="p-28p">
-                                <a href="marketplace-details.html"
-                                    class="heading-5 link-1 mb-2 line-clamp-1">Minecraft Mexico MXN</a>
-                                <p class="text-l-regular text-w-neutral-2">
-                                    Precios desde $ <span class="span">7.50</span>
-                                </p>
-                                <div class="flex-y gap-2 my-24p">
-                                    <div class="flex-y gap-1 text-primary icon-24">
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                        <i class="ti ti-star-filled"></i>
-                                    </div>
-                                    <p class="text-base text-w-neutral-1">4.9 (133)</p>
-                                </div>
-                                <div class="flex-y flex-wrap gap-3">
-                                    <img class="size-60p rounded-full shrink-0"
-                                        src="assets/images/icons/logoicon.png" alt="CarryLoot" />
-                                    <div>
-                                        <a href="https://discord.gg/eWDcXJx8BC"
-                                            class="flex-y gap-2 text-l-medium link-1 text-w-neutral-1 mb-1">
-                                            <span>CarryLoot</span>
-                                            <i class="ti ti-circle-check-filled text-secondary icon-24"></i>
-                                        </a>
-                                        <span class="text-s-medium text-w-neutral-3">Comercio</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 
@@ -2095,7 +1841,7 @@
                                     alt="Free Fire Diamonds" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardfreefireusa.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">Free Fire Diamonds</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
@@ -2138,7 +1884,7 @@
                                     alt="Garena Free Fire Mena Region" />
                             </div>
                             <div class="p-28p">
-                                <a href="marketplace-details.html"
+                                <a href="cardfreefireregion.html"
                                     class="heading-5 link-1 mb-2 line-clamp-1">Garena Free Fire Mena Region</a>
                                 <p class="text-l-regular text-w-neutral-2">
                                     Precios desde $ <span class="span">7.50</span>
