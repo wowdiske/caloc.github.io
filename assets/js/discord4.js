@@ -89,6 +89,24 @@ const platformConfigs = {
         format: 'card',
         region: 'eu'
     },
+
+    nintendousa: {
+        title: "Nintendo USA",
+        cardTypeTitle: "Nintendo USA",
+        amounts: [10, 20, 35, 50],
+        currency: 'USD',
+        format: 'card',
+        region: 'usa'
+    },
+
+    nintendoeu: {
+        title: "Nintendo eShop Currency (EUR - Europe)",
+        cardTypeTitle: "Nintendo eShop Currency (EUR - Europe)",
+        amounts: [15, 25, 50],
+        currency: 'EUR',
+        format: 'card',
+        region: 'eu'
+    },
     
     // Fortnite
     fortniteusa: {
@@ -147,6 +165,33 @@ const platformConfigs = {
         region: 'usa'
     },
 
+    // ROBLOX
+    robloxeu: {
+        title: "ROBLOX EUROPE",
+        cardTypeTitle: "ROBLOX EUROPE",
+        amounts: [10, 20],
+        specificAmounts: {
+            10: "Roblox",
+            20: "Roblox"
+        },
+        currency: 'EUR',
+        format: 'game',
+        region: 'eu'
+    },
+
+    // ROBLOX
+    robloxglobal: {
+        title: "Roblox Premium Global",
+        cardTypeTitle: "Roblox Premium Global",
+        amounts: [25],
+        specificAmounts: {
+            25: "Roblox Robux 2200"
+        },
+        currency: 'USD',
+        format: 'game',
+        region: 'usa'
+    },
+
     // FreeFire
     freefireusa: {
         title: "Free Fire Diamantes",
@@ -158,6 +203,20 @@ const platformConfigs = {
             7: "530 + Bonus Diamantes for FF",
             13: "1080 + Bonus Diamantes for FF",
             25: "2200 + Bonus Diamantes for FF"
+        },
+        currency: 'USD',
+        format: 'game',
+        region: 'usa'
+    },
+
+    freefireregion: {
+        title: "Garena Free Fire Mena Region",
+        cardTypeTitle: "Garena Free Fire Mena Region",
+        amounts: [2, 5, 20],
+        specificAmounts: {
+            2: "Free Fire 210 + 21 Diamantes",
+            5: "Free Fire 530 + 53 Diamantes",
+            20: "Free Fire 2200 + 220 Diamantes"
         },
         currency: 'USD',
         format: 'game',
@@ -310,6 +369,7 @@ function detectPlatform() {
         return 'minecraftusa';
     }
     if (pageName.includes('roblox')) {
+        if (pageName.includes('eu')) return 'robloxeu';
         return 'robloxusa';
     }
     if (pageName.includes('freefire')) {
@@ -318,6 +378,10 @@ function detectPlatform() {
     if (pageName.includes('xbox')) {
         if (pageName.includes('eu')) return 'xboxeu';
         return 'xboxusa';
+    }
+    if (pageName.includes('nintendo')) {
+        if (pageName.includes('eu')) return 'nintendoeu';
+        return 'nintendousa';
     }
     
     return 'steamusa'; // Por defecto
@@ -333,13 +397,20 @@ function getCurrencySymbol(currency) {
     return symbols[currency] || '$';
 }
 
-// Función para formatear el texto de la opción (SOLO VALOR NOMINAL)
+// Función para formatear el texto de la opción (CON MONTO Y MONEDA)
 function getOptionText(config, nominalAmount) {
     if (config.format === 'game' && config.specificAmounts && config.specificAmounts[nominalAmount]) {
-        return `${config.specificAmounts[nominalAmount]}`;
+        // Para juegos: "Roblox 10 EUR" o "2800 V-Bucks 30 EUR"
+        const specificText = config.specificAmounts[nominalAmount];
+        // Si el texto específico ya incluye el monto, mostrarlo completo
+        if (specificText.includes(nominalAmount.toString())) {
+            return specificText;
+        } else {
+            return `${specificText} ${nominalAmount} ${config.currency}`;
+        }
     } else {
-        const baseTitle = config.cardTypeTitle.split('-')[0].trim();
-        return `${baseTitle} ${nominalAmount} ${config.currency}`;
+        // Para tarjetas: usar el cardTypeTitle completo con el monto
+        return `${config.cardTypeTitle} - ${nominalAmount} ${config.currency}`;
     }
 }
 
@@ -494,7 +565,7 @@ function updatePrices() {
             // Mostrar en USD (SIEMPRE)
             const usdSymbol = getCurrencySymbol('USD');
             
-            // SOLO mostrar precios, NO modificar el título - CAMBIO AQUÍ
+            // SOLO mostrar precios, NO modificar el título
             if (config.currency === 'EUR') {
                 // Para EUR, mostrar los precios en USD pero NO modificar el título
                 document.getElementById('cardAmount').textContent = `${usdSymbol}${calculation.salePriceUSD}`;
