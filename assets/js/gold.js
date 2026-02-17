@@ -1,6 +1,6 @@
 // CONFIGURACIÓN PARA TURTLE WOW
 const GOLD_PRICE_PER_100 = 2.50; // $2.10 por cada 100 GOLD
-const DOLAR_TO_BS = 460; // 1 USD = 567 Bs
+const DOLAR_TO_BS = 590; // 1 USD = 567 Bs
 const VALID_COUPONS = ['PAUL', 'DESCUENTO10', 'GAMER2024', 'WOW5'];
 const DISCOUNT_PERCENTAGE = 0.03; // 5% de descuento
 
