@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botón VENDER - CarryLoot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            color: #a0a0c0;
+            font-size: 1.1rem;
+        }
+        
+        .preview {
+            background: #2b2d31;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #40444b;
+            position: relative;
+        }
+        
+        .preview-header {
+            color: #57f287;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .preview-header::before {
+            content: "✓";
+            background: #57f287;
+            color: #2b2d31;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .discord-embed {
+            background: #1e1f22;
+            border-left: 4px solid #57f287;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .embed-title {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .embed-description {
+            color: #b5bac1;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .button-preview {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .discord-button {
+            background: #57f287;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 180px;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(87, 242, 135, 0.2);
+        }
+        
+        .discord-button:hover {
+            background: #48d878;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(87, 242, 135, 0.3);
+        }
+        
+        .controls {
+            margin-top: 40px;
+        }
+        
+        .webhook-info {
+            background: rgba(87, 242, 135, 0.1);
+            border: 1px solid #57f287;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .webhook-info p {
+            color: #57f287;
+            font-family: monospace;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+        
+        .action-button {
+            background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .status.success {
+            background: rgba(87, 242, 135, 0.1);
+            color: #57f287;
+            border: 1px solid #57f287;
+        }
+        
+        .status.error {
+            background: rgba(237, 66, 69, 0.1);
+            color: #ed4245;
+            border: 1px solid #ed4245;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #72767d;
+            font-size: 0.9rem;
+        }
+        
+        .discord-button span {
+            font-size: 1.2em;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h2 {
+            color: #57f287;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h2>CarryLoot</h2>
+        </div>
+        
+        <div class="header">
+            <h1>🚀 Botón VENDER para Discord</h1>
+            <p>Crea un botón verde que redirige a CarryLoot.xyz</p>
+        </div>
+        
+        <div class="preview">
+            <div class="preview-header">Vista Previa del Mensaje en Discord</div>
+            
+            <div class="discord-embed">
+                <div class="embed-title">COMPRAMOS ORO</div>
+                <div class="embed-description">
+                    ¡Vende tu oro rápido y seguro!<br>
+                    Mejores precios del mercado garantizados.<br>
+                    Transacciones 100% seguras.
+                </div>
+                
+                <div class="button-preview">
+                    <button class="discord-button" onclick="window.open('https://www.carryloot.xyz', '_blank')">
+                        <span>💰</span> VENDER AHORA
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="webhook-info">
+                <p><strong>Webhook configurado:</strong></p>
+                <p>https://discord.com/api/webhooks/1462157943540813947/K1drFokyazJDSFFAJRP8lb4Kc6CG-IUEql45QAdwtTRdeKOZmdAUfND2zXGDqRi8fSkC</p>
+            </div>
+            
+            <button class="action-button" onclick="enviarBoton()">
+                <span>⚡</span> ENVIAR BOTÓN A DISCORD
+            </button>
+        </div>
+        
+        <div id="status" class="status"></div>
+        
+        <div class="footer">
+            <p>Este botón aparecerá en tu canal de Discord con estilo verde</p>
+            <p>Los usuarios serán redirigidos a: <strong>https://www.carryloot.xyz</strong></p>
+        </div>
+    </div>
+
+    <script>
+        // Tu webhook de Discord
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1462157943540813947/K1drFokyazJDSFFAJRP8lb4Kc6CG-IUEql45QAdwtTRdeKOZmdAUfND2zXGDqRi8fSkC';
+        
+        async function enviarBoton() {
+            const statusElement = document.getElementById('status');
+            const button = document.querySelector('.action-button');
+            
+            // Cambiar texto del botón mientras se envía
+            const originalText = button.innerHTML;
+            button.innerHTML = '<span>⏳</span> ENVIANDO...';
+            button.disabled = true;
+            
+            try {
+                // Datos del mensaje que se enviará a Discord
+                const mensajeDiscord = {
+                    content: null,
+                    embeds: [
+                        {
+                            title: "💰 COMPRAMOS ORO",
+                            description: "¡Vende tu oro rápido y seguro!\nMejores precios del mercado garantizados.\nTransacciones 100% seguras.",
+                            color: 3066993, // Color verde
+                            thumbnail: {
+                                url: "https://cdn.discordapp.com/emojis/1234567890123456789.png" // Opcional: URL de imagen
+                            },
+                            footer: {
+                                text: "CarryLoot.xyz | 2024",
+                                icon_url: "https://cdn.discordapp.com/emojis/1234567890123456789.png" // Opcional
+                            },
+                            timestamp: new Date().toISOString()
+                        }
+                    ],
+                    components: [
+                        {
+                            type: 1,
+                            components: [
+                                {
+                                    type: 2,
+                                    style: 5, // LINK style (botón verde)
+                                    label: "🚀 VENDER AHORA",
+                                    url: "https://www.carryloot.xyz",
+                                    emoji: {
+                                        name: "💰",
+                                        id: null
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                };
+                
+                // Enviar el mensaje a Discord
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(mensajeDiscord)
+                });
+                
+                // Mostrar resultado
+                if (response.ok) {
+                    statusElement.className = "status success";
+                    statusElement.style.display = "block";
+                    statusElement.innerHTML = `
+                        <strong>✅ ¡ÉXITO!</strong><br>
+                        El botón "VENDER" ha sido enviado a tu canal de Discord.<br>
+                        <small>Los usuarios podrán hacer clic en el botón verde para ir a CarryLoot.xyz</small>
+                    `;
+                    
+                    // Agregar animación de confeti
+                    mostrarConfeti();
+                    
+                } else {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                statusElement.className = "status error";
+                statusElement.style.display = "block";
+                statusElement.innerHTML = `
+                    <strong>❌ ERROR</strong><br>
+                    No se pudo enviar el botón.<br>
+                    <small>${error.message}</small>
+                `;
+            } finally {
+                // Restaurar botón
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Ocultar mensaje después de 10 segundos
+                setTimeout(() => {
+                    statusElement.style.display = "none";
+                }, 10000);
+            }
+        }
+        
+        function mostrarConfeti() {
+            // Efecto visual simple de confeti
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.top = '0';
+            confetti.style.left = '0';
+            confetti.style.width = '100%';
+            confetti.style.height = '100%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '9999';
+            
+            for (let i = 0; i < 50; i++) {
+                const dot = document.createElement('div');
+                dot.style.position = 'absolute';
+                dot.style.width = '10px';
+                dot.style.height = '10px';
+                dot.style.background = ['#57f287', '#5865f2', '#eb459e'][Math.floor(Math.random() * 3)];
+                dot.style.borderRadius = '50%';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.top = '-10px';
+                dot.style.opacity = '0.8';
+                
+                confetti.appendChild(dot);
+                
+                // Animación
+                const animation = dot.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: 1000 + Math.random() * 2000,
+                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                });
+                
+                animation.onfinish = () => dot.remove();
+            }
+            
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 2000);
+        }
+        
+        // Mostrar instrucciones al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Página lista para crear botón de Discord');
+            console.log('Webhook configurado:', WEBHOOK_URL);
+        });
+    </script>
+</body>
+</html>
