@@ -53,7 +53,7 @@ async function sendGoldNotificationToDiscord() {
         
         // Crear el mensaje con etiqueta
         const message = {
-            content: `Estoy comprando **${goldAmount.toLocaleString('es-VE')}G** ${serverName} - Escribeme <@${USER_ID_TO_MENTION}>`
+            content: `@here Estoy comprando **${goldAmount.toLocaleString('es-VE')}G** ${serverName} - Escribeme <@${USER_ID_TO_MENTION}>`
         };
         
         console.log('Enviando notificación de Gold:', message.content);
