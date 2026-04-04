@@ -1,1 +1,2094 @@
-Hola
+===== TURTLE WOW COMPRA/VENTA =====
+===== CONFIGURACIÓN WOW =====
+ADMIN_IDS = [442921280954433536, 446359515839856641]
+VERIFIED_EMOJI = "<:verified:1488900146203852950>"
+
+Variables globales WOW
+inventario_wow = {}
+servicios_wow = []
+mensajes_bot_wow = {}
+nombres_aleatorios = []
+
+feed_mensajes = {
+"oro": [],
+"consulta": []
+}
+
+consultas_activas = {}
+transacciones_activas = {}
+
+Configuración de imágenes y textos desde canal
+config_servicio = {
+"oro": {
+"descripcion": "",
+"thumbnail": "",
+"imagen_final": ""
+},
+"compra": {
+"descripcion": "",
+"thumbnail": "",
+"imagen_final": ""
+},
+"venta": {
+"descripcion": "",
+"thumbnail": "",
+"imagen_final": ""
+}
+}
+
+config_metodos_pago = {
+"binance": {
+"qr": "",
+"id": "",
+"activo": False
+},
+"paypal": {
+"qr": "",
+"correo": "",
+"comision_porcentaje": 5.4,
+"comision_fija": 0.30,
+"activo": False
+},
+"pagomovil": {
+"qr": "",
+"banco": "",
+"ci": "",
+"telefono": "",
+"tasa": 0.0,
+"activo": False
+}
+}
+
+===== FUNCIONES AUXILIARES =====
+def obtener_display_name(miembro):
+if isinstance(miembro, discord.Member):
+return miembro.display_name
+return miembro.name
+
+def obtener_nombre_para_feed(usuario):
+if usuario.id in ADMIN_IDS and nombres_aleatorios:
+return random.choice(nombres_aleatorios)
+return obtener_display_name(usuario)
+
+def extraer_reputacion(texto):
+patron = r'Rep \★ \+(\d+)'
+match = re.search(patron, texto)
+if match:
+return int(match.group(1))
+return 0
+
+def extraer_nombre_usuario(texto):
+lineas = texto.split('\n')
+for linea in lineas:
+linea = linea.strip()
+if linea.startswith('+ ') and not linea.startswith('+ (') and not linea.startswith('+ +'):
+partes = linea[2:].split()
+if partes:
+nombre = partes[0]
+if nombre not in ["CarryShop", "APP", ""]:
+return nombre
+return "Desconocido"
+
+async def encontrar_canal_por_nombre(nombre_canal):
+for guild in bot.guilds:
+for channel in guild.text_channels:
+if channel.name == nombre_canal:
+return channel.id
+return None
+
+===== CONFIGURACIÓN =====
+async def leer_configuracion_metodos_pago():
+global config_metodos_pago
+
+canal_id = await encontrar_canal_por_nombre("metodospagos")
+if not canal_id:
+print("❌ No se encontró el canal 'metodospagos'")
+return False
+
+canal = bot.get_channel(canal_id) or await bot.fetch_channel(canal_id)
+
+async for mensaje in canal.history(limit=5):
+if not mensaje.author.bot:
+contenido = mensaje.content
+lineas = contenido.strip().split('\n')
+
+nueva_config = {
+"binance": {
+"qr": "",
+"id": "",
+"activo": False
+},
+"paypal": {
+"qr": "",
+"correo": "",
+"comision_porcentaje": 5.4,
+"comision_fija": 0.30,
+"activo": False
+},
+"pagomovil": {
+"qr": "",
+"banco": "",
+"ci": "",
+"telefono": "",
+"tasa": 0.0,
+"activo": False
+}
+}
+
+metodo_actual = None
+
+for linea in lineas:
+linea = linea.strip()
+if not linea:
+continue
+
+if linea == "BINANCE:":
+metodo_actual = "binance"
+continue
+elif linea == "PAYPAL:":
+metodo_actual = "paypal"
+continue
+elif linea == "PAGO MOVIL:":
+metodo_actual = "pagomovil"
+continue
+
+if not metodo_actual:
+continue
+
+if ":" in linea:
+clave, valor = linea.split(":", 1)
+clave = clave.strip().upper()
+valor = valor.strip()
+
+if metodo_actual == "binance":
+if clave == "QR":
+nueva_config["binance"]["qr"] = valor
+elif clave == "ID":
+nueva_config["binance"]["id"] = valor
+elif clave == "ACTIVO":
+nueva_config["binance"]["activo"] = valor.lower() == "true"
+
+elif metodo_actual == "paypal":
+if clave == "QR":
+nueva_config["paypal"]["qr"] = valor
+elif clave == "CORREO":
+nueva_config["paypal"]["correo"] = valor
+elif clave == "COMISION_PORCENTAJE":
+nueva_config["paypal"]["comision_porcentaje"] = float(valor.replace(",", "."))
+elif clave == "COMISION_FIJA":
+nueva_config["paypal"]["comision_fija"] = float(valor.replace(",", "."))
+elif clave == "ACTIVO":
+nueva_config["paypal"]["activo"] = valor.lower() == "true"
+
+elif metodo_actual == "pagomovil":
+if clave == "QR":
+nueva_config["pagomovil"]["qr"] = valor
+elif clave == "BANCO":
+nueva_config["pagomovil"]["banco"] = valor
+elif clave == "CI":
+nueva_config["pagomovil"]["ci"] = valor
+elif clave == "TELEFONO":
+nueva_config["pagomovil"]["telefono"] = valor
+elif clave == "TASA":
+valor_limpio = valor.replace(",", ".")
+nueva_config["pagomovil"]["tasa"] = float(valor_limpio)
+elif clave == "ACTIVO":
+nueva_config["pagomovil"]["activo"] = valor.lower() == "true"
+
+if nueva_config["binance"]["qr"] or nueva_config["paypal"]["qr"] or nueva_config["pagomovil"]["qr"]:
+config_metodos_pago = nueva_config
+print(f"✅ Configuración de métodos de pago cargada desde 'metodospagos'")
+print(f" Binance activo: {config_metodos_pago['binance']['activo']}")
+print(f" Paypal activo: {config_metodos_pago['paypal']['activo']}")
+print(f" Pago Móvil activo: {config_metodos_pago['pagomovil']['activo']} (Tasa: {config_metodos_pago['pagomovil']['tasa']})")
+return True
+else:
+print("❌ Configuración de métodos de pago incompleta")
+return False
+
+return False
+
+async def leer_configuracion_servicio():
+global config_servicio
+canal_id = await encontrar_canal_por_nombre("servicio-turtlewow")
+if not canal_id:
+print("No se encontró el canal 'servicio-turtlewow'")
+return False
+canal = bot.get_channel(canal_id) or await bot.fetch_channel(canal_id)
+async for mensaje in canal.history(limit=5):
+if not mensaje.author.bot:
+contenido = mensaje.content
+secciones = contenido.split('\n\n')
+for seccion in secciones:
+lineas = seccion.strip().split('\n')
+if not lineas:
+continue
+titulo = lineas[0].strip().replace(':', '')
+if titulo == "ORO":
+for linea in lineas[1:]:
+if linea.startswith("Descripción:"):
+config_servicio["oro"]["descripcion"] = linea.split(":", 1)[1].strip()
+elif linea.startswith("Thumbnail:"):
+config_servicio["oro"]["thumbnail"] = linea.split(":", 1)[1].strip()
+elif linea.startswith("Imagen final:"):
+config_servicio["oro"]["imagen_final"] = linea.split(":", 1)[1].strip()
+elif titulo == "COMPRA":
+for linea in lineas[1:]:
+if linea.startswith("Descripción:"):
+config_servicio["compra"]["descripcion"] = linea.split(":", 1)[1].strip()
+elif linea.startswith("Thumbnail:"):
+config_servicio["compra"]["thumbnail"] = linea.split(":", 1)[1].strip()
+elif linea.startswith("Imagen final:"):
+config_servicio["compra"]["imagen_final"] = linea.split(":", 1)[1].strip()
+elif titulo == "VENTA":
+for linea in lineas[1:]:
+if linea.startswith("Descripción:"):
+config_servicio["venta"]["descripcion"] = linea.split(":", 1)[1].strip()
+elif linea.startswith("Thumbnail:"):
+config_servicio["venta"]["thumbnail"] = linea.split(":", 1)[1].strip()
+elif linea.startswith("Imagen final:"):
+config_servicio["venta"]["imagen_final"] = linea.split(":", 1)[1].strip()
+print(f"Configuración de servicio cargada")
+return True
+return False
+
+async def leer_nombres_aleatorios():
+global nombres_aleatorios
+canal_id = await encontrar_canal_por_nombre("nombres-cyv")
+if not canal_id:
+print("No se encontró el canal 'nombres-cyv'")
+return False
+canal = bot.get_channel(canal_id) or await bot.fetch_channel(canal_id)
+async for mensaje in canal.history(limit=5):
+if not mensaje.author.bot:
+contenido = mensaje.content
+nombres = [n.strip() for n in contenido.split(',')]
+nombres_aleatorios = nombres
+print(f"Nombres aleatorios cargados: {len(nombres_aleatorios)} nombres")
+return True
+return False
+
+async def leer_servicios_wow():
+global servicios_wow
+canal_id = await encontrar_canal_por_nombre("servicios-wow")
+if not canal_id:
+print("No se encontró el canal 'servicios-wow'")
+return False
+canal = bot.get_channel(canal_id) or await bot.fetch_channel(canal_id)
+async for mensaje in canal.history(limit=5):
+if not mensaje.author.bot:
+contenido = mensaje.content
+lineas = contenido.strip().split('\n')
+servicios_temp = []
+for linea in lineas:
+linea = linea.strip()
+if linea.startswith('•') or linea.startswith('-'):
+servicio = linea.lstrip('•- ').strip()
+if servicio:
+servicios_temp.append(servicio)
+elif linea and not linea.startswith('SERVICIOS'):
+servicios_temp.append(linea)
+if servicios_temp:
+servicios_wow = servicios_temp
+print(f"Servicios WoW cargados: {servicios_wow}")
+return True
+return False
+
+async def leer_configuracion_wow(servicio):
+global inventario_wow, mensajes_bot_wow
+nombre_canal = servicio.lower().replace(' ', '-') + '-config'
+canal_id = await encontrar_canal_por_nombre(nombre_canal)
+if not canal_id:
+print(f"No se encontró el canal '{nombre_canal}' para {servicio}")
+return False
+canal = bot.get_channel(canal_id) or await bot.fetch_channel(canal_id)
+mensaje_admin = None
+mensaje_bot_existente = None
+async for mensaje in canal.history(limit=20):
+if mensaje.author == bot.user:
+if servicio in mensajes_bot_wow:
+if mensajes_bot_wow[servicio] == mensaje.id:
+mensaje_bot_existente = mensaje
+else:
+mensaje_bot_existente = mensaje
+elif not mensaje.author.bot:
+mensaje_admin = mensaje
+break
+if mensaje_admin:
+try:
+contenido = mensaje_admin.content
+inventario_temp = {}
+lineas = contenido.strip().split('\n')
+servidor_actual = None
+faccion_actual = None
+for linea in lineas:
+linea = linea.strip()
+if linea == "-":
+continue
+if linea.startswith("SERVIDOR:"):
+servidor_actual = linea.split(":", 1)[1].strip()
+if servidor_actual not in inventario_temp:
+inventario_temp[servidor_actual] = {}
+elif linea.startswith("FACCION:"):
+faccion_actual = linea.split(":", 1)[1].strip()
+if faccion_actual not in inventario_temp[servidor_actual]:
+inventario_temp[servidor_actual][faccion_actual] = {}
+elif linea.startswith("PRECIO_VENDER_MIN:"):
+precio_min = float(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["precio_vender_min"] = precio_min
+elif linea.startswith("PRECIO_VENDER_MAX:"):
+precio_max = float(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["precio_vender_max"] = precio_max
+elif linea.startswith("PRECIO_COMPRAR_MIN:"):
+precio_min = float(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["precio_comprar_min"] = precio_min
+elif linea.startswith("PRECIO_COMPRAR_MAX:"):
+precio_max = float(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["precio_comprar_max"] = precio_max
+elif linea.startswith("STOCK_MAXIMO:"):
+stock_max = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_maximo"] = stock_max
+elif linea.startswith("FORMATO:"):
+formato = linea.split(":", 1)[1].strip()
+inventario_temp[servidor_actual][faccion_actual]["formato"] = formato
+elif linea.startswith("STOCK_PARA_VENDER_COMPARTIDO:"):
+stock = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_vender"] = stock
+inventario_temp[servidor_actual][faccion_actual]["stock_vender_compartido"] = True
+elif linea.startswith("STOCK_PARA_VENDER:"):
+stock = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_vender"] = stock
+inventario_temp[servidor_actual][faccion_actual]["stock_vender_compartido"] = False
+elif linea.startswith("STOCK_PARA_COMPRAR_COMPARTIDO:"):
+stock = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_comprar"] = stock
+inventario_temp[servidor_actual][faccion_actual]["stock_comprar_compartido"] = True
+elif linea.startswith("STOCK_PARA_COMPRAR:"):
+stock = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_comprar"] = stock
+inventario_temp[servidor_actual][faccion_actual]["stock_comprar_compartido"] = False
+if inventario_temp:
+if servicio not in inventario_wow:
+inventario_wow[servicio] = {}
+inventario_wow[servicio] = inventario_temp
+if mensaje_bot_existente:
+try:
+await mensaje_bot_existente.delete()
+except:
+pass
+await enviar_mensaje_inventario(servicio, canal, inventario_temp)
+try:
+await mensaje_admin.delete()
+except:
+pass
+print(f"Configuración cargada para {servicio}: {len(inventario_temp)} servidores")
+return True
+except Exception as e:
+print(f"Error al procesar mensaje de admin: {e}")
+elif mensaje_bot_existente:
+try:
+contenido = mensaje_bot_existente.content
+inventario_temp = {}
+lineas = contenido.strip().split('\n')
+servidor_actual = None
+faccion_actual = None
+for linea in lineas:
+linea = linea.strip()
+if linea == "-":
+continue
+if linea.startswith("SERVIDOR:"):
+servidor_actual = linea.split(":", 1)[1].strip()
+if servidor_actual not in inventario_temp:
+inventario_temp[servidor_actual] = {}
+elif linea.startswith("FACCION:"):
+faccion_actual = linea.split(":", 1)[1].strip()
+if faccion_actual not in inventario_temp[servidor_actual]:
+inventario_temp[servidor_actual][faccion_actual] = {}
+elif linea.startswith("PRECIO_VENDER_MIN:"):
+precio_min = float(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["precio_vender_min"] = precio_min
+elif linea.startswith("PRECIO_VENDER_MAX:"):
+precio_max = float(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["precio_vender_max"] = precio_max
+elif linea.startswith("PRECIO_COMPRAR_MIN:"):
+precio_min = float(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["precio_comprar_min"] = precio_min
+elif linea.startswith("PRECIO_COMPRAR_MAX:"):
+precio_max = float(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["precio_comprar_max"] = precio_max
+elif linea.startswith("STOCK_MAXIMO:"):
+stock_max = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_maximo"] = stock_max
+elif linea.startswith("FORMATO:"):
+formato = linea.split(":", 1)[1].strip()
+inventario_temp[servidor_actual][faccion_actual]["formato"] = formato
+elif linea.startswith("STOCK_PARA_VENDER_COMPARTIDO:"):
+stock = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_vender"] = stock
+inventario_temp[servidor_actual][faccion_actual]["stock_vender_compartido"] = True
+elif linea.startswith("STOCK_PARA_VENDER:"):
+stock = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_vender"] = stock
+inventario_temp[servidor_actual][faccion_actual]["stock_vender_compartido"] = False
+elif linea.startswith("STOCK_PARA_COMPRAR_COMPARTIDO:"):
+stock = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_comprar"] = stock
+inventario_temp[servidor_actual][faccion_actual]["stock_comprar_compartido"] = True
+elif linea.startswith("STOCK_PARA_COMPRAR:"):
+stock = int(linea.split(":", 1)[1].strip())
+inventario_temp[servidor_actual][faccion_actual]["stock_comprar"] = stock
+inventario_temp[servidor_actual][faccion_actual]["stock_comprar_compartido"] = False
+if inventario_temp:
+if servicio not in inventario_wow:
+inventario_wow[servicio] = {}
+inventario_wow[servicio] = inventario_temp
+mensajes_bot_wow[servicio] = mensaje_bot_existente.id
+print(f"Configuración cargada para {servicio} desde mensaje existente: {len(inventario_temp)} servidores")
+return True
+except Exception as e:
+print(f"Error al procesar mensaje del bot existente: {e}")
+return False
+
+async def enviar_mensaje_inventario(servicio, canal, inventario_data):
+global mensajes_bot_wow
+contenido = f"INVENTARIO {servicio.upper()}\n\n"
+for servidor, facciones in inventario_data.items():
+for faccion, datos in facciones.items():
+contenido += f"SERVIDOR: {servidor}\n"
+contenido += f"FACCION: {faccion}\n"
+if datos.get("precio_vender_min") is not None:
+contenido += f"PRECIO_VENDER_MIN: {datos.get('precio_vender_min', 0):.2f}\n"
+contenido += f"PRECIO_VENDER_MAX: {datos.get('precio_vender_max', 0):.2f}\n"
+contenido += f"PRECIO_COMPRAR_MIN: {datos.get('precio_comprar_min', 0):.2f}\n"
+contenido += f"PRECIO_COMPRAR_MAX: {datos.get('precio_comprar_max', 0):.2f}\n"
+contenido += f"STOCK_MAXIMO: {datos.get('stock_maximo', 0)}\n"
+else:
+contenido += f"PRECIO_VENDER: {datos.get('precio_vender_fijo', 1.60):.2f}\n"
+contenido += f"PRECIO_COMPRAR: {datos.get('precio_comprar_fijo', 1.30):.2f}\n"
+contenido += f"FORMATO: {datos.get('formato', '100g')}\n"
+if datos.get('stock_vender_compartido', False):
+contenido += f"STOCK_PARA_VENDER_COMPARTIDO: {datos.get('stock_vender', 0)}\n"
+else:
+contenido += f"STOCK_PARA_VENDER: {datos.get('stock_vender', 0)}\n"
+if datos.get('stock_comprar_compartido', False):
+contenido += f"STOCK_PARA_COMPRAR_COMPARTIDO: {datos.get('stock_comprar', 0)}\n"
+else:
+contenido += f"STOCK_PARA_COMPRAR: {datos.get('stock_comprar', 0)}\n"
+contenido += "-\n"
+if servicio in mensajes_bot_wow:
+try:
+mensaje_anterior = await canal.fetch_message(mensajes_bot_wow[servicio])
+if mensaje_anterior.author == bot.user:
+await mensaje_anterior.delete()
+except:
+pass
+mensaje = await canal.send(contenido)
+mensajes_bot_wow[servicio] = mensaje.id
+
+def calcular_precio_dinamico(servicio, servidor, faccion, stock_actual, tipo):
+if servicio not in inventario_wow:
+return None
+if servidor not in inventario_wow[servicio]:
+return None
+if faccion not in inventario_wow[servicio][servidor]:
+return None
+datos = inventario_wow[servicio][servidor][faccion]
+if tipo == "vender":
+precio_min = datos.get("precio_vender_min")
+precio_max = datos.get("precio_vender_max")
+else:
+precio_min = datos.get("precio_comprar_min")
+precio_max = datos.get("precio_comprar_max")
+if precio_min is None or precio_max is None:
+if tipo == "vender":
+return datos.get("precio_vender_fijo", 1.60)
+else:
+return datos.get("precio_comprar_fijo", 1.30)
+stock_maximo = datos.get("stock_maximo", 10000)
+if stock_maximo <= 0:
+return precio_min
+proporcion = max(0, min(1, stock_actual / stock_maximo))
+precio = precio_min + (precio_max - precio_min) * (1 - proporcion)
+return round(precio, 2)
+
+async def actualizar_stock_wow(servicio, servidor, faccion, cantidad, operacion):
+if servicio not in inventario_wow:
+return False
+if servidor not in inventario_wow[servicio]:
+return False
+datos_servidor = inventario_wow[servicio][servidor]
+if faccion not in datos_servidor:
+return False
+datos_faccion = datos_servidor[faccion]
+stock_vender_compartido = datos_faccion.get('stock_vender_compartido', False)
+stock_comprar_compartido = datos_faccion.get('stock_comprar_compartido', False)
+if operacion == "compra_cliente":
+if stock_vender_compartido:
+nuevo_stock_vender = None
+for fac in datos_servidor:
+stock_actual = datos_servidor[fac].get("stock_vender", 0)
+if nuevo_stock_vender is None:
+nuevo_stock_vender = max(0, stock_actual - cantidad)
+datos_servidor[fac]["stock_vender"] = nuevo_stock_vender
+stock_comprar_actual = datos_servidor[fac].get("stock_comprar", 0)
+datos_servidor[fac]["stock_comprar"] = stock_comprar_actual + cantidad
+else:
+stock_actual = datos_faccion.get("stock_vender", 0)
+nuevo_stock = max(0, stock_actual - cantidad)
+datos_faccion["stock_vender"] = nuevo_stock
+stock_comprar_actual = datos_faccion.get("stock_comprar", 0)
+datos_faccion["stock_comprar"] = stock_comprar_actual + cantidad
+elif operacion == "venta_cliente":
+if stock_comprar_compartido:
+nuevo_stock_comprar = None
+for fac in datos_servidor:
+stock_actual = datos_servidor[fac].get("stock_comprar", 0)
+if nuevo_stock_comprar is None:
+nuevo_stock_comprar = max(0, stock_actual - cantidad)
+datos_servidor[fac]["stock_comprar"] = nuevo_stock_comprar
+stock_vender_actual = datos_servidor[fac].get("stock_vender", 0)
+datos_servidor[fac]["stock_vender"] = stock_vender_actual + cantidad
+else:
+stock_actual = datos_faccion.get("stock_comprar", 0)
+nuevo_stock = max(0, stock_actual - cantidad)
+datos_faccion["stock_comprar"] = nuevo_stock
+stock_vender_actual = datos_faccion.get("stock_vender", 0)
+datos_faccion["stock_vender"] = stock_vender_actual + cantidad
+else:
+return False
+nombre_canal = servicio.lower().replace(' ', '-') + '-config'
+canal_id = await encontrar_canal_por_nombre(nombre_canal)
+if not canal_id:
+return False
+canal = bot.get_channel(canal_id) or await bot.fetch_channel(canal_id)
+if servicio in mensajes_bot_wow:
+try:
+mensaje = await canal.fetch_message(mensajes_bot_wow[servicio])
+lineas = mensaje.content.split('\n')
+nuevas_lineas = []
+servidor_actual = None
+faccion_actual = None
+for linea in lineas:
+linea_original = linea
+linea_limpia = linea.strip()
+if linea_limpia == "-":
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("SERVIDOR:"):
+servidor_actual = linea_limpia.split(":", 1)[1].strip()
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("FACCION:"):
+faccion_actual = linea_limpia.split(":", 1)[1].strip()
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("PRECIO_VENDER_MIN:"):
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("PRECIO_VENDER_MAX:"):
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("PRECIO_COMPRAR_MIN:"):
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("PRECIO_COMPRAR_MAX:"):
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("STOCK_MAXIMO:"):
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("PRECIO_VENDER:"):
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("PRECIO_COMPRAR:"):
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("FORMATO:"):
+nuevas_lineas.append(linea)
+elif linea_limpia.startswith("STOCK_PARA_VENDER_COMPARTIDO:") and servidor_actual == servidor:
+nuevas_lineas.append(f"STOCK_PARA_VENDER_COMPARTIDO: {datos_servidor[faccion_actual]['stock_vender']}")
+elif linea_limpia.startswith("STOCK_PARA_VENDER:") and servidor_actual == servidor and faccion_actual == faccion:
+nuevas_lineas.append(f"STOCK_PARA_VENDER: {datos_servidor[faccion_actual]['stock_vender']}")
+elif linea_limpia.startswith("STOCK_PARA_COMPRAR_COMPARTIDO:") and servidor_actual == servidor:
+nuevas_lineas.append(f"STOCK_PARA_COMPRAR_COMPARTIDO: {datos_servidor[faccion_actual]['stock_comprar']}")
+elif linea_limpia.startswith("STOCK_PARA_COMPRAR:") and servidor_actual == servidor and faccion_actual == faccion:
+nuevas_lineas.append(f"STOCK_PARA_COMPRAR: {datos_servidor[faccion_actual]['stock_comprar']}")
+else:
+nuevas_lineas.append(linea)
+nuevo_contenido = '\n'.join(nuevas_lineas)
+await mensaje.edit(content=nuevo_contenido)
+return True
+except Exception as e:
+print(f"Error al actualizar mensaje: {e}")
+return False
+return False
+
+===== FEED DE ACTIVIDAD =====
+async def leer_mensajes_feed():
+global feed_mensajes
+tipos_feed = {
+"feedoro": "oro",
+"feedconsulta": "consulta"
+}
+for nombre_canal, tipo in tipos_feed.items():
+try:
+canal_id = await encontrar_canal_por_nombre(nombre_canal)
+if not canal_id:
+print(f"No se encontró el canal '{nombre_canal}'")
+continue
+canal = bot.get_channel(canal_id) or await bot.fetch_channel(canal_id)
+async for mensaje in canal.history(limit=10):
+if not mensaje.author.bot:
+lineas = [linea.strip() for linea in mensaje.content.split('\n') if linea.strip()]
+if lineas:
+feed_mensajes[tipo] = lineas
+print(f"Mensajes de feed cargados para {tipo}: {len(lineas)}")
+break
+except Exception as e:
+print(f"Error al leer {nombre_canal}: {e}")
+
+async def enviar_feed(tipo, usuario, datos, cantidad_dolares=0):
+if tipo not in feed_mensajes or not feed_mensajes[tipo]:
+print(f"No hay mensajes configurados para {tipo}")
+return
+
+mensaje_base = random.choice(feed_mensajes[tipo])
+nombre_usuario = obtener_nombre_para_feed(usuario)
+mensaje_final = mensaje_base.replace("{usuario}", nombre_usuario)
+
+if "cantidad" in datos and datos["cantidad"]:
+mensaje_final = mensaje_final.replace("{cantidad}", datos["cantidad"])
+if "servidor" in datos and datos["servidor"]:
+mensaje_final = mensaje_final.replace("{servidor}", datos["servidor"])
+
+rep = int(round(cantidad_dolares))
+if rep < 1:
+rep = 1
+
+lineas_mensaje = mensaje_final.split('\n')
+lineas_diff = []
+for linea in lineas_mensaje:
+if linea.strip():
+lineas_diff.append(f"+ {linea}")
+else:
+lineas_diff.append("+")
+
+lineas_diff.append(f"+")
+lineas_diff.append(f"+ (Rep ★ +{rep})")
+
+mensaje_diff = "\n".join(lineas_diff)
+mensaje_final_diff = f"diff\n{mensaje_diff}\n"
+
+canal_feed_id = await encontrar_canal_por_nombre("🔥┃feed⋆actividad")
+if canal_feed_id:
+canal = bot.get_channel(canal_feed_id) or await bot.fetch_channel(canal_feed_id)
+try:
+mensaje_enviado = await canal.send(mensaje_final_diff)
+try:
+await mensaje_enviado.add_reaction(VERIFIED_EMOJI)
+print(f"Feed enviado: {tipo} - {nombre_usuario} +{rep} rep")
+except:
+pass
+except Exception as e:
+print(f"Error al enviar feed: {e}")
+else:
+print("No se encontró el canal '🔥┃feed⋆actividad'")
+
+===== SISTEMA DE CONSULTAS Y TRANSACCIONES =====
+async def manejar_consulta_universal(usuario, mensaje_original=None):
+global consultas_activas
+if usuario.id in consultas_activas and consultas_activas[usuario.id]["activa"]:
+return False, "Ya tienes una consulta activa. Espera a que un administrador la cierre."
+
+consultas_activas[usuario.id] = {
+"admin_id": None,
+"activa": True,
+"conversacion": [],
+"mensaje_original": mensaje_original
+}
+
+await enviar_feed("consulta", usuario, {}, 1)
+
+try:
+await usuario.send("📬 CONSULTA ENVIADA\n\nHas realizado una consulta sobre los servicios de CarryLoot. Un administrador te responderá a la brevedad.\n\nGracias por confiar en nosotros.")
+except:
+pass
+
+for admin_id in ADMIN_IDS:
+try:
+admin = await bot.fetch_user(admin_id)
+mensaje_inicial = f"""CONSULTA - Usuario: {usuario.name} ID: {usuario.id}
+
+El usuario desea consultar algo sobre los servicios de CarryLoot.
+
+Responde a este mensaje para comunicarte con el cliente."""
+await admin.send(mensaje_inicial)
+except Exception as e:
+print(f"No se pudo enviar DM al admin {admin_id}: {e}")
+return True, "Tu consulta ha sido enviada. Un administrador te responderá a la brevedad."
+
+async def manejar_transaccion(usuario, tipo_operacion, datos_transaccion, mensaje_original=None):
+global transacciones_activas
+transacciones_activas[usuario.id] = {
+"admin_id": None,
+"activa": True,
+"tipo": tipo_operacion,
+"datos": datos_transaccion,
+"conversacion": [],
+"mensaje_original": mensaje_original
+}
+
+datos_feed = {
+"cantidad": f"{datos_transaccion.get('cantidad')}g",
+"servidor": datos_transaccion.get('servidor')
+}
+await enviar_feed("oro", usuario, datos_feed, datos_transaccion.get('precio_total'))
+
+try:
+factura = f"""CARRYLOOT - FACTURA DE {tipo_operacion}
+
+Detalles de la transacción:
+• Juego: {datos_transaccion.get('juego')}
+• Servidor: {datos_transaccion.get('servidor')}
+• Cantidad: {datos_transaccion.get('cantidad')}g
+• Facción: {datos_transaccion.get('faccion')}
+• Entrega: {datos_transaccion.get('entrega')}
+• Personaje: {datos_transaccion.get('personaje')}
+• Precio total: ${datos_transaccion.get('precio_total'):.2f} USD
+• Método de Pago: {datos_transaccion.get('metodo_pago')}
+
+Gracias por confiar en CarryLoot. Un administrador se pondrá en contacto contigo para coordinar la {'entrega' if tipo_operacion == 'COMPRA' else 'recepción del pago'}."""
+
+if tipo_operacion == "COMPRA":
+factura += f"\n• Monto pagado: ${datos_transaccion.get('monto_pagado'):.2f} USD"
+else:
+factura += f"\n• Datos de pago proporcionados: {datos_transaccion.get('datos_pago')}"
+
+await usuario.send(factura)
+except:
+pass
+
+for admin_id in ADMIN_IDS:
+try:
+admin = await bot.fetch_user(admin_id)
+if tipo_operacion == "COMPRA":
+mensaje_admin = f"""TRANSACCIÓN - COMPRA DE ORO (cliente compra oro)
+Usuario: {usuario.name} ID: {usuario.id}
+
+DETALLES:
+Juego: {datos_transaccion.get('juego')}
+Servidor: {datos_transaccion.get('servidor')}
+Cantidad: {datos_transaccion.get('cantidad')}g
+Facción: {datos_transaccion.get('faccion')}
+Entrega: {datos_transaccion.get('entrega')}
+Personaje: {datos_transaccion.get('personaje')}
+Precio total: ${datos_transaccion.get('precio_total'):.2f} USD
+Método de Pago: {datos_transaccion.get('metodo_pago')}
+Monto pagado: ${datos_transaccion.get('monto_pagado'):.2f} USD
+
+Responde a este mensaje para comunicarte con el cliente."""
+else:
+mensaje_admin = f"""TRANSACCIÓN - VENTA DE ORO (cliente vende oro)
+Usuario: {usuario.name} ID: {usuario.id}
+
+DETALLES:
+Juego: {datos_transaccion.get('juego')}
+Servidor: {datos_transaccion.get('servidor')}
+Cantidad: {datos_transaccion.get('cantidad')}g
+Facción: {datos_transaccion.get('faccion')}
+Entrega: {datos_transaccion.get('entrega')}
+Personaje: {datos_transaccion.get('personaje')}
+Precio total: ${datos_transaccion.get('precio_total'):.2f} USD
+Método de Pago: {datos_transaccion.get('metodo_pago')}
+Datos de Pago: {datos_transaccion.get('datos_pago')}
+
+Responde a este mensaje para comunicarte con el cliente."""
+await admin.send(mensaje_admin)
+except Exception as e:
+print(f"No se pudo enviar DM al admin {admin_id}: {e}")
+return True
+
+async def cerrar_consulta(usuario_id):
+global consultas_activas
+if usuario_id in consultas_activas:
+if "mensaje_id" in consultas_activas[usuario_id]:
+try:
+admin_id = consultas_activas[usuario_id].get("admin_id")
+if admin_id:
+admin = await bot.fetch_user(admin_id)
+msg = await admin.fetch_message(consultas_activas[usuario_id]["mensaje_id"])
+await msg.delete()
+except:
+pass
+consultas_activas[usuario_id]["activa"] = False
+return True
+return False
+
+async def cerrar_transaccion(usuario_id):
+global transacciones_activas
+if usuario_id in transacciones_activas:
+if "mensaje_id" in transacciones_activas[usuario_id]:
+try:
+admin_id = transacciones_activas[usuario_id].get("admin_id")
+if admin_id:
+admin = await bot.fetch_user(admin_id)
+msg = await admin.fetch_message(transacciones_activas[usuario_id]["mensaje_id"])
+await msg.delete()
+except:
+pass
+transacciones_activas[usuario_id]["activa"] = False
+return True
+return False
+
+def construir_historial_conversacion(usuario_id, es_transaccion=False):
+if es_transaccion:
+datos = transacciones_activas.get(usuario_id, {})
+else:
+datos = consultas_activas.get(usuario_id, {})
+conversacion = datos.get("conversacion", [])
+lineas = [f"ID: {usuario_id}"]
+for msg in conversacion:
+if msg["tipo"] == "usuario":
+respondido = False
+timestamp_msg = msg["timestamp"]
+for otro_msg in conversacion:
+if otro_msg["tipo"] == "admin" and otro_msg["timestamp"] > timestamp_msg:
+respondido = True
+break
+emoji = "🔴" if respondido else "🟢"
+contenido = msg.get("contenido", "")
+if msg.get("es_archivo"):
+lineas.append(f"[Imagen] {contenido} {emoji}")
+else:
+lineas.append(f"Mensaje: {contenido} {emoji}")
+else:
+contenido = msg.get("contenido", "")
+if msg.get("es_archivo"):
+lineas.append(f"Tu: [Imagen] {contenido}")
+else:
+lineas.append(f"Tu: {contenido}")
+return "\n".join(lineas)
+
+===== NOTIFICACIONES =====
+async def enviar_a_canal(canal_nombre, contenido):
+canal_id = await encontrar_canal_por_nombre(canal_nombre)
+if not canal_id:
+return
+canal = bot.get_channel(canal_id) or await bot.fetch_channel(canal_id)
+try:
+await canal.send(contenido)
+except Exception as e:
+print(f"No se pudo enviar al canal {canal_nombre}: {e}")
+
+async def enviar_notificacion_transaccion(usuario, tipo_operacion, datos_transaccion):
+if tipo_operacion == "COMPRA":
+canal_destino = "orden-compra"
+tipo_operacion_texto = "COMPRA DE ORO"
+else:
+canal_destino = "orden-venta"
+tipo_operacion_texto = "VENTA DE ORO"
+mensaje = f"""SOLICITUD DE {tipo_operacion_texto}
+Usuario: {usuario.name} ({usuario.mention})
+ID: {usuario.id}
+Juego: {datos_transaccion.get('juego')}
+Servidor: {datos_transaccion.get('servidor')}
+Cantidad: {datos_transaccion.get('cantidad')}g
+Precio total: ${datos_transaccion.get('precio_total'):.2f} USD
+Personaje: {datos_transaccion.get('personaje')}
+Facción: {datos_transaccion.get('faccion')}
+Entrega: {datos_transaccion.get('entrega')}
+Método de Pago: {datos_transaccion.get('metodo_pago')}
+Hora: <t:{int(discord.utils.utcnow().timestamp())}:F>"""
+await enviar_a_canal(canal_destino, mensaje)
+
+===== MODALES Y VISTAS =====
+class BinanceIDModalFinal(discord.ui.Modal, title="Binance ID"):
+def init(self, metodo_view):
+super().init()
+self.metodo_view = metodo_view
+self.binance_id = discord.ui.TextInput(
+label="Binance ID o correo electrónico",
+placeholder="Ej: 123456789 o usuario@binance.com",
+required=True,
+max_length=100
+)
+self.add_item(self.binance_id)
+
+async def on_submit(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 PROCESANDO...",
+description="Estamos procesando tu solicitud de venta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+datos_pago = f"Binance ID: {self.binance_id.value}"
+embed_confirmacion = discord.Embed(
+title="SOLICITUD ENVIADA",
+description="Tu solicitud ha sido notificada a los administradores.\n\nUn administrador se pondrá en contacto contigo.\n\nGracias por confiar en nosotros.",
+color=discord.Color.blue()
+)
+embed_confirmacion.add_field(name="Juego", value=self.metodo_view.juego, inline=True)
+embed_confirmacion.add_field(name="Servidor", value=self.metodo_view.servidor, inline=True)
+cant_formateado = f"{self.metodo_view.cantidad:,}".replace(',', '.')
+embed_confirmacion.add_field(name="Cantidad", value=f"{cant_formateado}g", inline=True)
+embed_confirmacion.add_field(name="Precio total", value=f"${self.metodo_view.precio_total:.2f} USD", inline=True)
+embed_confirmacion.add_field(name="Personaje", value=self.metodo_view.personaje, inline=True)
+embed_confirmacion.add_field(name="Facción", value=self.metodo_view.faccion, inline=True)
+embed_confirmacion.add_field(name="Entrega", value=self.metodo_view.entrega, inline=True)
+embed_confirmacion.add_field(name="Método de Pago", value="Binance", inline=True)
+embed_confirmacion.add_field(name="Datos de Pago", value=datos_pago, inline=False)
+embed_confirmacion.timestamp = discord.utils.utcnow()
+
+datos_transaccion = {
+"juego": self.metodo_view.juego,
+"servidor": self.metodo_view.servidor,
+"cantidad": self.metodo_view.cantidad,
+"faccion": self.metodo_view.faccion,
+"entrega": self.metodo_view.entrega,
+"personaje": self.metodo_view.personaje,
+"precio_total": self.metodo_view.precio_total,
+"metodo_pago": "Binance",
+"datos_pago": datos_pago
+}
+
+await manejar_transaccion(interaction.user, "VENTA", datos_transaccion, self.metodo_view.mensaje_original)
+await enviar_notificacion_transaccion(interaction.user, "VENTA", datos_transaccion)
+
+if self.metodo_view.juego in servicios_wow:
+await actualizar_stock_wow(self.metodo_view.juego, self.metodo_view.servidor, self.metodo_view.faccion, self.metodo_view.cantidad, "venta_cliente")
+
+await interaction.edit_original_response(embed=embed_confirmacion, view=None)
+
+class PaypalModalFinal(discord.ui.Modal, title="Paypal"):
+def init(self, metodo_view):
+super().init()
+self.metodo_view = metodo_view
+self.paypal_email = discord.ui.TextInput(
+label="Correo de Paypal",
+placeholder="ejemplo@paypal.com",
+required=True,
+max_length=100
+)
+self.add_item(self.paypal_email)
+
+async def on_submit(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 PROCESANDO...",
+description="Estamos procesando tu solicitud de venta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+datos_pago = f"Paypal: {self.paypal_email.value}"
+embed_confirmacion = discord.Embed(
+title="SOLICITUD ENVIADA",
+description="Tu solicitud ha sido notificada a los administradores.\n\nUn administrador se pondrá en contacto contigo.\n\nGracias por confiar en nosotros.",
+color=discord.Color.blue()
+)
+embed_confirmacion.add_field(name="Juego", value=self.metodo_view.juego, inline=True)
+embed_confirmacion.add_field(name="Servidor", value=self.metodo_view.servidor, inline=True)
+cant_formateado = f"{self.metodo_view.cantidad:,}".replace(',', '.')
+embed_confirmacion.add_field(name="Cantidad", value=f"{cant_formateado}g", inline=True)
+embed_confirmacion.add_field(name="Precio total", value=f"${self.metodo_view.precio_total:.2f} USD", inline=True)
+embed_confirmacion.add_field(name="Personaje", value=self.metodo_view.personaje, inline=True)
+embed_confirmacion.add_field(name="Facción", value=self.metodo_view.faccion, inline=True)
+embed_confirmacion.add_field(name="Entrega", value=self.metodo_view.entrega, inline=True)
+embed_confirmacion.add_field(name="Método de Pago", value="Paypal", inline=True)
+embed_confirmacion.add_field(name="Datos de Pago", value=datos_pago, inline=False)
+embed_confirmacion.timestamp = discord.utils.utcnow()
+
+datos_transaccion = {
+"juego": self.metodo_view.juego,
+"servidor": self.metodo_view.servidor,
+"cantidad": self.metodo_view.cantidad,
+"faccion": self.metodo_view.faccion,
+"entrega": self.metodo_view.entrega,
+"personaje": self.metodo_view.personaje,
+"precio_total": self.metodo_view.precio_total,
+"metodo_pago": "Paypal",
+"datos_pago": datos_pago
+}
+
+await manejar_transaccion(interaction.user, "VENTA", datos_transaccion, self.metodo_view.mensaje_original)
+await enviar_notificacion_transaccion(interaction.user, "VENTA", datos_transaccion)
+
+if self.metodo_view.juego in servicios_wow:
+await actualizar_stock_wow(self.metodo_view.juego, self.metodo_view.servidor, self.metodo_view.faccion, self.metodo_view.cantidad, "venta_cliente")
+
+await interaction.edit_original_response(embed=embed_confirmacion, view=None)
+
+class PagoMovilModalFinal(discord.ui.Modal, title="Pago Móvil"):
+def init(self, metodo_view):
+super().init()
+self.metodo_view = metodo_view
+self.banco = discord.ui.TextInput(
+label="Banco",
+placeholder="Ej: Banco de Venezuela, Banesco, Mercantil",
+required=True,
+max_length=50
+)
+self.add_item(self.banco)
+self.cedula = discord.ui.TextInput(
+label="Cédula",
+placeholder="Ej: 12345678",
+required=True,
+max_length=15
+)
+self.add_item(self.cedula)
+self.telefono = discord.ui.TextInput(
+label="Número de celular",
+placeholder="Ej: 0412-1234567",
+required=True,
+max_length=20
+)
+self.add_item(self.telefono)
+
+async def on_submit(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 PROCESANDO...",
+description="Estamos procesando tu solicitud de venta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+datos_pago = f"Pago Móvil - Banco: {self.banco.value} | Cédula: {self.cedula.value} | Teléfono: {self.telefono.value}"
+embed_confirmacion = discord.Embed(
+title="SOLICITUD ENVIADA",
+description="Tu solicitud ha sido notificada a los administradores.\n\nUn administrador se pondrá en contacto contigo.\n\nGracias por confiar en nosotros.",
+color=discord.Color.blue()
+)
+embed_confirmacion.add_field(name="Juego", value=self.metodo_view.juego, inline=True)
+embed_confirmacion.add_field(name="Servidor", value=self.metodo_view.servidor, inline=True)
+cant_formateado = f"{self.metodo_view.cantidad:,}".replace(',', '.')
+embed_confirmacion.add_field(name="Cantidad", value=f"{cant_formateado}g", inline=True)
+embed_confirmacion.add_field(name="Precio total", value=f"${self.metodo_view.precio_total:.2f} USD", inline=True)
+embed_confirmacion.add_field(name="Personaje", value=self.metodo_view.personaje, inline=True)
+embed_confirmacion.add_field(name="Facción", value=self.metodo_view.faccion, inline=True)
+embed_confirmacion.add_field(name="Entrega", value=self.metodo_view.entrega, inline=True)
+embed_confirmacion.add_field(name="Método de Pago", value="Pago Móvil", inline=True)
+embed_confirmacion.add_field(name="Datos de Pago", value=datos_pago, inline=False)
+embed_confirmacion.timestamp = discord.utils.utcnow()
+
+datos_transaccion = {
+"juego": self.metodo_view.juego,
+"servidor": self.metodo_view.servidor,
+"cantidad": self.metodo_view.cantidad,
+"faccion": self.metodo_view.faccion,
+"entrega": self.metodo_view.entrega,
+"personaje": self.metodo_view.personaje,
+"precio_total": self.metodo_view.precio_total,
+"metodo_pago": "Pago Móvil",
+"datos_pago": datos_pago
+}
+
+await manejar_transaccion(interaction.user, "VENTA", datos_transaccion, self.metodo_view.mensaje_original)
+await enviar_notificacion_transaccion(interaction.user, "VENTA", datos_transaccion)
+
+if self.metodo_view.juego in servicios_wow:
+await actualizar_stock_wow(self.metodo_view.juego, self.metodo_view.servidor, self.metodo_view.faccion, self.metodo_view.cantidad, "venta_cliente")
+
+await interaction.edit_original_response(embed=embed_confirmacion, view=None)
+
+class MetodoPagoView(discord.ui.View):
+def init(self, usuario, juego, servidor, cantidad, faccion, entrega, precio_total, personaje, mensaje_original):
+super().init(timeout=300)
+self.usuario = usuario
+self.juego = juego
+self.servidor = servidor
+self.cantidad = cantidad
+self.faccion = faccion
+self.entrega = entrega
+self.precio_total = precio_total
+self.personaje = personaje
+self.mensaje_original = mensaje_original
+self.boton_binance = discord.ui.Button(label="Binance ID", style=discord.ButtonStyle.primary, row=0)
+self.boton_paypal = discord.ui.Button(label="Paypal", style=discord.ButtonStyle.primary, row=0)
+self.boton_pago_movil = discord.ui.Button(label="Pago Móvil", style=discord.ButtonStyle.primary, row=0)
+self.boton_consulta = discord.ui.Button(label="CONSULTA", style=discord.ButtonStyle.secondary, row=1)
+self.boton_inicio = discord.ui.Button(label="INICIO", style=discord.ButtonStyle.secondary, row=1)
+self.boton_binance.callback = self.binance_callback
+self.boton_paypal.callback = self.paypal_callback
+self.boton_pago_movil.callback = self.pago_movil_callback
+self.boton_consulta.callback = self.consulta_callback
+self.boton_inicio.callback = self.inicio_callback
+self.add_item(self.boton_binance)
+self.add_item(self.boton_paypal)
+self.add_item(self.boton_pago_movil)
+self.add_item(self.boton_consulta)
+self.add_item(self.boton_inicio)
+
+async def binance_callback(self, interaction: discord.Interaction):
+modal = BinanceIDModalFinal(self)
+await interaction.response.send_modal(modal)
+
+async def paypal_callback(self, interaction: discord.Interaction):
+modal = PaypalModalFinal(self)
+await interaction.response.send_modal(modal)
+
+async def pago_movil_callback(self, interaction: discord.Interaction):
+modal = PagoMovilModalFinal(self)
+await interaction.response.send_modal(modal)
+
+async def consulta_callback(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 CARGANDO...",
+description="Estamos preparando tu consulta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+embed_cargando.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed_cargando.timestamp = discord.utils.utcnow()
+
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+await manejar_consulta_universal(interaction.user, self.mensaje_original)
+
+embed_consulta = discord.Embed(
+title="📬 CONSULTA ENVIADA",
+description="Tu consulta ha sido enviada a los administradores. Te responderán a la brevedad.\n\nGracias por confiar en CarryLoot.",
+color=discord.Color.blue()
+)
+embed_consulta.timestamp = discord.utils.utcnow()
+
+await interaction.edit_original_response(embed=embed_consulta, view=None)
+
+async def inicio_callback(self, interaction: discord.Interaction):
+embed = discord.Embed(
+title="Servicios CarryLoot",
+description=configuracion["descripcion"],
+color=discord.Color.blue()
+)
+if configuracion["thumbnail"]:
+embed.set_thumbnail(url=configuracion["thumbnail"])
+if configuracion["imagen_final"]:
+embed.set_image(url=configuracion["imagen_final"])
+embed.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed.timestamp = discord.utils.utcnow()
+nueva_vista = ServiciosView(embed, self.mensaje_original if hasattr(self, 'mensaje_original') else None)
+await interaction.response.edit_message(embed=embed, view=nueva_vista)
+
+class NombrePersonajeModalVenta(discord.ui.Modal, title="Nombre del Personaje"):
+def init(self, formulario_view):
+super().init()
+self.formulario_view = formulario_view
+self.nombre_input = discord.ui.TextInput(
+label="Nombre de tu personaje",
+placeholder="Ej: Thrall, Jaina, Arthas",
+required=True,
+max_length=32,
+min_length=2
+)
+self.add_item(self.nombre_input)
+
+async def on_submit(self, interaction: discord.Interaction):
+await interaction.response.defer()
+nombre_personaje = self.nombre_input.value
+
+embed_metodo_pago = discord.Embed(
+title="SELECCIONA TU MÉTODO DE PAGO",
+description=f"Resumen de tu solicitud:\n\n"
+f"Juego: {self.formulario_view.juego}\n"
+f"Servidor: {self.formulario_view.servidor}\n"
+f"Cantidad: {self.formulario_view.cantidad:,}g\n"
+f"Precio total: ${self.formulario_view.precio_total:.2f} USD\n"
+f"Personaje: {nombre_personaje}\n"
+f"Facción: {self.formulario_view.faccion}\n"
+f"Entrega: {self.formulario_view.entrega}\n\n"
+f"Selecciona cómo deseas recibir tu pago:",
+color=discord.Color.blue()
+)
+if config_servicio["venta"]["thumbnail"]:
+embed_metodo_pago.set_thumbnail(url=config_servicio["venta"]["thumbnail"])
+if config_servicio["venta"]["imagen_final"]:
+embed_metodo_pago.set_image(url=config_servicio["venta"]["imagen_final"])
+embed_metodo_pago.set_footer(text="Tienes 5 minutos para seleccionar un método de pago")
+embed_metodo_pago.timestamp = discord.utils.utcnow()
+vista_metodo = MetodoPagoView(
+interaction.user,
+self.formulario_view.juego,
+self.formulario_view.servidor,
+self.formulario_view.cantidad,
+self.formulario_view.faccion,
+self.formulario_view.entrega,
+self.formulario_view.precio_total,
+nombre_personaje,
+self.formulario_view.mensaje_original
+)
+await interaction.edit_original_response(embed=embed_metodo_pago, view=vista_metodo)
+
+class FormularioVentaView(discord.ui.View):
+def init(self, accion, usuario, juego, mensaje_original):
+super().init(timeout=300)
+self.accion = accion
+self.usuario = usuario
+self.juego = juego
+self.mensaje_original = mensaje_original
+self.servidor = None
+self.faccion = None
+self.cantidad = None
+self.entrega = None
+self.precio_total = 0
+self.precio_unitario = 0
+self.cantidad_base = 0
+opciones_servidor = []
+if juego in inventario_wow:
+for servidor, facciones in inventario_wow[juego].items():
+tiene_stock_compra = False
+for faccion, datos in facciones.items():
+if datos.get("stock_comprar", 0) > 0:
+tiene_stock_compra = True
+break
+if tiene_stock_compra:
+opciones_servidor.append(discord.SelectOption(label=servidor[:100], value=servidor))
+if not opciones_servidor:
+opciones_servidor = [discord.SelectOption(label="No hay servidores disponibles", value="none", default=True)]
+self.servidor_select = discord.ui.Select(placeholder="Selecciona el servidor", options=opciones_servidor, row=0)
+self.faccion_select = discord.ui.Select(placeholder="Primero selecciona un servidor", options=[discord.SelectOption(label="Selecciona un servidor primero", value="0", default=True)], disabled=True, row=1)
+self.cantidad_select = discord.ui.Select(placeholder="Primero selecciona una facción", options=[discord.SelectOption(label="Selecciona una facción primero", value="0", default=True)], disabled=True, row=2)
+self.entrega_select = discord.ui.Select(placeholder="Selecciona el método de entrega", options=[discord.SelectOption(label="Correo In-game", value="Correo In-game"), discord.SelectOption(label="Cara a cara", value="Cara a cara"), discord.SelectOption(label="Casa de subastas", value="Casa de subastas")], row=3)
+self.boton_enviar = discord.ui.Button(label="CONTINUAR", style=discord.ButtonStyle.success, disabled=True, row=4)
+self.boton_inicio = discord.ui.Button(label="INICIO", style=discord.ButtonStyle.secondary, row=4)
+self.boton_consulta = discord.ui.Button(label="CONSULTA", style=discord.ButtonStyle.secondary, row=4)
+self.servidor_select.callback = self.select_servidor
+self.faccion_select.callback = self.select_faccion
+self.cantidad_select.callback = self.select_cantidad
+self.entrega_select.callback = self.select_entrega
+self.boton_enviar.callback = self.enviar_formulario
+self.boton_inicio.callback = self.inicio_callback
+self.boton_consulta.callback = self.consulta_callback
+self.add_item(self.servidor_select)
+self.add_item(self.faccion_select)
+self.add_item(self.cantidad_select)
+self.add_item(self.entrega_select)
+self.add_item(self.boton_enviar)
+self.add_item(self.boton_inicio)
+self.add_item(self.boton_consulta)
+
+async def select_servidor(self, interaction: discord.Interaction):
+await interaction.response.defer()
+if self.servidor_select.values[0] == "none":
+await interaction.followup.send("No hay servidores disponibles.", ephemeral=True)
+return
+self.servidor = self.servidor_select.values[0]
+self.servidor_select.placeholder = f"Servidor: {self.servidor}"
+facciones_disponibles = []
+for faccion, datos in inventario_wow[self.juego][self.servidor].items():
+stock_compra = datos.get("stock_comprar", 0)
+if stock_compra > 0:
+facciones_disponibles.append(discord.SelectOption(label=faccion, value=faccion))
+if not facciones_disponibles:
+await interaction.followup.send("No hay facciones disponibles en este servidor.", ephemeral=True)
+return
+self.faccion_select.options = facciones_disponibles
+self.faccion_select.disabled = False
+self.faccion_select.placeholder = "Selecciona tu facción"
+await interaction.edit_original_response(view=self)
+
+async def select_faccion(self, interaction: discord.Interaction):
+await interaction.response.defer()
+self.faccion = self.faccion_select.values[0]
+for option in self.faccion_select.options:
+if option.value == self.faccion:
+self.faccion_select.placeholder = f"Facción: {option.label}"
+break
+stock_actual = inventario_wow[self.juego][self.servidor][self.faccion].get("stock_comprar", 0)
+precio_unitario = calcular_precio_dinamico(self.juego, self.servidor, self.faccion, stock_actual, "comprar")
+self.precio_unitario = precio_unitario
+datos = inventario_wow[self.juego][self.servidor][self.faccion]
+formato = datos.get("formato", "100g")
+self.cantidad_base = int(re.search(r'(\d+)g', formato).group(1)) if re.search(r'(\d+)g', formato) else 100
+stock_compra_maximo = datos.get("stock_comprar", 0)
+opciones_cantidad = []
+multiplos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+for mult in multiplos:
+cant = self.cantidad_base * mult
+if cant <= stock_compra_maximo:
+total = mult * self.precio_unitario
+cant_formateado = f"{cant:,}".replace(',', '.')
+opciones_cantidad.append(discord.SelectOption(label=f"{cant_formateado}g - ${total:.2f}"[:100], value=str(cant)))
+self.cantidad_select.options = opciones_cantidad
+self.cantidad_select.disabled = False
+self.cantidad_select.placeholder = "Selecciona la cantidad"
+await self.verificar_completado(interaction)
+
+async def select_cantidad(self, interaction: discord.Interaction):
+await interaction.response.defer()
+self.cantidad = int(self.cantidad_select.values[0])
+mult = self.cantidad // self.cantidad_base
+self.precio_total = mult * self.precio_unitario
+for option in self.cantidad_select.options:
+if option.value == str(self.cantidad):
+self.cantidad_select.placeholder = f"Cantidad: {option.label}"
+break
+await self.verificar_completado(interaction)
+
+async def select_entrega(self, interaction: discord.Interaction):
+await interaction.response.defer()
+self.entrega = self.entrega_select.values[0]
+for option in self.entrega_select.options:
+if option.value == self.entrega:
+self.entrega_select.placeholder = f"Entrega: {option.label}"
+break
+await self.verificar_completado(interaction)
+
+async def verificar_completado(self, interaction: discord.Interaction):
+if self.servidor and self.faccion and self.cantidad and self.entrega:
+self.boton_enviar.disabled = False
+await interaction.edit_original_response(view=self)
+
+async def enviar_formulario(self, interaction: discord.Interaction):
+modal = NombrePersonajeModalVenta(self)
+await interaction.response.send_modal(modal)
+
+async def inicio_callback(self, interaction: discord.Interaction):
+embed = discord.Embed(
+title="Servicios CarryLoot",
+description=configuracion["descripcion"],
+color=discord.Color.blue()
+)
+if configuracion["thumbnail"]:
+embed.set_thumbnail(url=configuracion["thumbnail"])
+if configuracion["imagen_final"]:
+embed.set_image(url=configuracion["imagen_final"])
+embed.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed.timestamp = discord.utils.utcnow()
+nueva_vista = ServiciosView(embed, self.mensaje_original if hasattr(self, 'mensaje_original') else None)
+await interaction.response.edit_message(embed=embed, view=nueva_vista)
+
+async def consulta_callback(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 CARGANDO...",
+description="Estamos preparando tu consulta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+embed_cargando.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed_cargando.timestamp = discord.utils.utcnow()
+
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+await manejar_consulta_universal(interaction.user, self.mensaje_original)
+
+embed_consulta = discord.Embed(
+title="📬 CONSULTA ENVIADA",
+description="Tu consulta ha sido enviada a los administradores. Te responderán a la brevedad.\n\nGracias por confiar en CarryLoot.",
+color=discord.Color.blue()
+)
+embed_consulta.timestamp = discord.utils.utcnow()
+
+await interaction.edit_original_response(embed=embed_consulta, view=None)
+
+class NombrePersonajeModalCompra(discord.ui.Modal, title="Nombre del Personaje"):
+def init(self, accion_view):
+super().init()
+self.accion_view = accion_view
+self.nombre_input = discord.ui.TextInput(
+label="Nombre de tu personaje",
+placeholder="Ej: Thrall, Jaina, Arthas",
+required=True,
+max_length=32,
+min_length=2
+)
+self.add_item(self.nombre_input)
+
+async def on_submit(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 PROCESANDO...",
+description="Estamos procesando tu solicitud de compra.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+nombre_personaje = self.nombre_input.value
+datos_transaccion = {
+"juego": self.accion_view.juego,
+"servidor": self.accion_view.servidor,
+"cantidad": self.accion_view.cantidad,
+"faccion": self.accion_view.faccion,
+"entrega": self.accion_view.entrega,
+"personaje": nombre_personaje,
+"precio_total": self.accion_view.precio_total,
+"metodo_pago": self.accion_view.metodo_pago,
+"monto_pagado": self.accion_view.monto_total
+}
+
+await manejar_transaccion(interaction.user, "COMPRA", datos_transaccion, self.accion_view.mensaje_original)
+await enviar_notificacion_transaccion(interaction.user, "COMPRA", datos_transaccion)
+
+if self.accion_view.juego in servicios_wow:
+await actualizar_stock_wow(self.accion_view.juego, self.accion_view.servidor, self.accion_view.faccion, self.accion_view.cantidad, "compra_cliente")
+
+embed_confirmacion = discord.Embed(
+title="SOLICITUD ENVIADA",
+description=f"Tu solicitud de compra de oro ha sido notificada a los administradores.\n\nUn administrador se pondrá en contacto contigo para confirmar el pago y coordinar la entrega.\n\nGracias por confiar en nosotros.",
+color=discord.Color.green()
+)
+
+embed_confirmacion.add_field(name="Juego", value=self.accion_view.juego, inline=True)
+embed_confirmacion.add_field(name="Servidor", value=self.accion_view.servidor, inline=True)
+cant_formateado = f"{self.accion_view.cantidad:,}".replace(',', '.')
+embed_confirmacion.add_field(name="Cantidad", value=f"{cant_formateado}g", inline=True)
+embed_confirmacion.add_field(name="Precio total", value=f"${self.accion_view.precio_total:.2f} USD", inline=True)
+embed_confirmacion.add_field(name="Personaje", value=nombre_personaje, inline=True)
+embed_confirmacion.add_field(name="Facción", value=self.accion_view.faccion, inline=True)
+embed_confirmacion.add_field(name="Entrega", value=self.accion_view.entrega, inline=True)
+embed_confirmacion.add_field(name="Método de Pago", value=self.accion_view.metodo_pago, inline=True)
+embed_confirmacion.timestamp = discord.utils.utcnow()
+
+await interaction.edit_original_response(embed=embed_confirmacion, view=None)
+
+class FormularioCompraView(discord.ui.View):
+def init(self, accion, usuario, juego, mensaje_original):
+super().init(timeout=300)
+self.accion = accion
+self.usuario = usuario
+self.juego = juego
+self.mensaje_original = mensaje_original
+self.servidor = None
+self.faccion = None
+self.cantidad = None
+self.entrega = None
+self.precio_total = 0
+self.precio_unitario = 0
+self.cantidad_base = 0
+self.metodo_pago_seleccionado = None
+self.monto_total = 0
+opciones_servidor = []
+if juego in inventario_wow:
+for servidor, facciones in inventario_wow[juego].items():
+tiene_stock_venta = False
+for faccion, datos in facciones.items():
+if datos.get("stock_vender", 0) > 0:
+tiene_stock_venta = True
+break
+if tiene_stock_venta:
+opciones_servidor.append(discord.SelectOption(label=servidor[:100], value=servidor))
+if not opciones_servidor:
+opciones_servidor = [discord.SelectOption(label="No hay servidores disponibles", value="none", default=True)]
+self.servidor_select = discord.ui.Select(placeholder="Selecciona el servidor", options=opciones_servidor, row=0)
+self.faccion_select = discord.ui.Select(placeholder="Primero selecciona un servidor", options=[discord.SelectOption(label="Selecciona un servidor primero", value="0", default=True)], disabled=True, row=1)
+self.cantidad_select = discord.ui.Select(placeholder="Primero selecciona una facción", options=[discord.SelectOption(label="Selecciona una facción primero", value="0", default=True)], disabled=True, row=2)
+self.entrega_select = discord.ui.Select(placeholder="Selecciona el método de entrega", options=[discord.SelectOption(label="Correo In-game", value="Correo In-game"), discord.SelectOption(label="Cara a cara", value="Cara a cara"), discord.SelectOption(label="Casa de subastas", value="Casa de subastas"), discord.SelectOption(label="Con mercancía", value="Con mercancía")], row=3)
+self.boton_pagar = discord.ui.Button(label="PAGAR", style=discord.ButtonStyle.success, disabled=True, row=4)
+self.boton_inicio = discord.ui.Button(label="INICIO", style=discord.ButtonStyle.secondary, row=4)
+self.boton_consulta = discord.ui.Button(label="CONSULTA", style=discord.ButtonStyle.secondary, row=4)
+self.servidor_select.callback = self.select_servidor
+self.faccion_select.callback = self.select_faccion
+self.cantidad_select.callback = self.select_cantidad
+self.entrega_select.callback = self.select_entrega
+self.boton_pagar.callback = self.pagar_callback
+self.boton_inicio.callback = self.inicio_callback
+self.boton_consulta.callback = self.consulta_callback
+self.add_item(self.servidor_select)
+self.add_item(self.faccion_select)
+self.add_item(self.cantidad_select)
+self.add_item(self.entrega_select)
+self.add_item(self.boton_pagar)
+self.add_item(self.boton_inicio)
+self.add_item(self.boton_consulta)
+
+async def select_servidor(self, interaction: discord.Interaction):
+await interaction.response.defer()
+if self.servidor_select.values[0] == "none":
+await interaction.followup.send("No hay servidores disponibles.", ephemeral=True)
+return
+self.servidor = self.servidor_select.values[0]
+self.servidor_select.placeholder = f"Servidor: {self.servidor}"
+facciones_disponibles = []
+for faccion, datos in inventario_wow[self.juego][self.servidor].items():
+stock_venta = datos.get("stock_vender", 0)
+if stock_venta > 0:
+facciones_disponibles.append(discord.SelectOption(label=faccion, value=faccion))
+if not facciones_disponibles:
+await interaction.followup.send("No hay facciones disponibles en este servidor.", ephemeral=True)
+return
+self.faccion_select.options = facciones_disponibles
+self.faccion_select.disabled = False
+self.faccion_select.placeholder = "Selecciona tu facción"
+await interaction.edit_original_response(view=self)
+
+async def select_faccion(self, interaction: discord.Interaction):
+await interaction.response.defer()
+self.faccion = self.faccion_select.values[0]
+for option in self.faccion_select.options:
+if option.value == self.faccion:
+self.faccion_select.placeholder = f"Facción: {option.label}"
+break
+stock_actual = inventario_wow[self.juego][self.servidor][self.faccion].get("stock_vender", 0)
+precio_unitario = calcular_precio_dinamico(self.juego, self.servidor, self.faccion, stock_actual, "vender")
+self.precio_unitario = precio_unitario
+datos = inventario_wow[self.juego][self.servidor][self.faccion]
+formato = datos.get("formato", "100g")
+self.cantidad_base = int(re.search(r'(\d+)g', formato).group(1)) if re.search(r'(\d+)g', formato) else 100
+stock_venta_maximo = datos.get("stock_vender", 0)
+opciones_cantidad = []
+multiplos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+for mult in multiplos:
+cant = self.cantidad_base * mult
+if cant <= stock_venta_maximo:
+total = mult * self.precio_unitario
+cant_formateado = f"{cant:,}".replace(',', '.')
+opciones_cantidad.append(discord.SelectOption(label=f"{cant_formateado}g - ${total:.2f}"[:100], value=str(cant)))
+self.cantidad_select.options = opciones_cantidad
+self.cantidad_select.disabled = False
+self.cantidad_select.placeholder = "Selecciona la cantidad"
+await self.verificar_completado(interaction)
+
+async def select_cantidad(self, interaction: discord.Interaction):
+await interaction.response.defer()
+self.cantidad = int(self.cantidad_select.values[0])
+mult = self.cantidad // self.cantidad_base
+self.precio_total = mult * self.precio_unitario
+for option in self.cantidad_select.options:
+if option.value == str(self.cantidad):
+self.cantidad_select.placeholder = f"Cantidad: {option.label}"
+break
+await self.verificar_completado(interaction)
+
+async def select_entrega(self, interaction: discord.Interaction):
+await interaction.response.defer()
+self.entrega = self.entrega_select.values[0]
+for option in self.entrega_select.options:
+if option.value == self.entrega:
+self.entrega_select.placeholder = f"Entrega: {option.label}"
+break
+await self.verificar_completado(interaction)
+
+async def verificar_completado(self, interaction: discord.Interaction):
+if self.servidor and self.faccion and self.cantidad and self.entrega:
+self.boton_pagar.disabled = False
+await interaction.edit_original_response(view=self)
+
+async def pagar_callback(self, interaction: discord.Interaction):
+embed_metodo_pago = discord.Embed(
+title="SELECCIONA TU MÉTODO DE PAGO",
+description=f"Resumen de tu compra:\n\n"
+f"Juego: {self.juego}\n"
+f"Servidor: {self.servidor}\n"
+f"Cantidad: {self.cantidad:,}g\n"
+f"Precio total: ${self.precio_total:.2f} USD\n"
+f"Facción: {self.faccion}\n"
+f"Entrega: {self.entrega}\n\n"
+f"Selecciona cómo deseas pagar:",
+color=discord.Color.green()
+)
+if config_servicio["compra"]["thumbnail"]:
+embed_metodo_pago.set_thumbnail(url=config_servicio["compra"]["thumbnail"])
+if config_servicio["compra"]["imagen_final"]:
+embed_metodo_pago.set_image(url=config_servicio["compra"]["imagen_final"])
+embed_metodo_pago.set_footer(text="Tienes 5 minutos para seleccionar un método de pago")
+embed_metodo_pago.timestamp = discord.utils.utcnow()
+vista_metodo = MetodoPagoCompraView(
+interaction.user,
+self.juego,
+self.servidor,
+self.cantidad,
+self.faccion,
+self.entrega,
+self.precio_total,
+self.mensaje_original
+)
+await interaction.response.edit_message(embed=embed_metodo_pago, view=vista_metodo)
+
+async def inicio_callback(self, interaction: discord.Interaction):
+embed = discord.Embed(
+title="Servicios CarryLoot",
+description=configuracion["descripcion"],
+color=discord.Color.blue()
+)
+if configuracion["thumbnail"]:
+embed.set_thumbnail(url=configuracion["thumbnail"])
+if configuracion["imagen_final"]:
+embed.set_image(url=configuracion["imagen_final"])
+embed.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed.timestamp = discord.utils.utcnow()
+nueva_vista = ServiciosView(embed, self.mensaje_original if hasattr(self, 'mensaje_original') else None)
+await interaction.response.edit_message(embed=embed, view=nueva_vista)
+
+async def consulta_callback(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 CARGANDO...",
+description="Estamos preparando tu consulta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+embed_cargando.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed_cargando.timestamp = discord.utils.utcnow()
+
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+await manejar_consulta_universal(interaction.user, self.mensaje_original)
+
+embed_consulta = discord.Embed(
+title="📬 CONSULTA ENVIADA",
+description="Tu consulta ha sido enviada a los administradores. Te responderán a la brevedad.\n\nGracias por confiar en CarryLoot.",
+color=discord.Color.blue()
+)
+embed_consulta.timestamp = discord.utils.utcnow()
+
+await interaction.edit_original_response(embed=embed_consulta, view=None)
+
+class MetodoPagoCompraView(discord.ui.View):
+def init(self, usuario, juego, servidor, cantidad, faccion, entrega, precio_total, mensaje_original):
+super().init(timeout=300)
+self.usuario = usuario
+self.juego = juego
+self.servidor = servidor
+self.cantidad = cantidad
+self.faccion = faccion
+self.entrega = entrega
+self.precio_total = precio_total
+self.mensaje_original = mensaje_original
+self.boton_binance = discord.ui.Button(label="Binance", style=discord.ButtonStyle.primary, row=0)
+self.boton_paypal = discord.ui.Button(label="Paypal", style=discord.ButtonStyle.primary, row=0)
+self.boton_pago_movil = discord.ui.Button(label="Pago Móvil", style=discord.ButtonStyle.primary, row=0)
+self.boton_consulta = discord.ui.Button(label="CONSULTA", style=discord.ButtonStyle.secondary, row=1)
+self.boton_inicio = discord.ui.Button(label="INICIO", style=discord.ButtonStyle.secondary, row=1)
+self.boton_binance.callback = self.binance_callback
+self.boton_paypal.callback = self.paypal_callback
+self.boton_pago_movil.callback = self.pago_movil_callback
+self.boton_consulta.callback = self.consulta_callback
+self.boton_inicio.callback = self.inicio_callback
+self.add_item(self.boton_binance)
+self.add_item(self.boton_paypal)
+self.add_item(self.boton_pago_movil)
+self.add_item(self.boton_consulta)
+self.add_item(self.boton_inicio)
+
+async def binance_callback(self, interaction: discord.Interaction):
+metodo_data = config_metodos_pago.get("binance", {})
+if not metodo_data.get("activo", True):
+await interaction.response.send_message("Este método de pago no está disponible.", ephemeral=True)
+return
+embed_pago = discord.Embed(
+title="PAGO CON BINANCE",
+description="Escanea el código QR o usa los datos para realizar el pago",
+color=discord.Color.gold()
+)
+embed_pago.set_thumbnail(url=metodo_data.get("qr", ""))
+embed_pago.add_field(name="BINANCE ID", value=f"{metodo_data.get('id', 'No disponible')}", inline=False)
+embed_pago.add_field(name="TOTAL A PAGAR", value=f"${self.precio_total:.2f} USD", inline=False)
+resumen = f"\nJuego: {self.juego}\nServidor: {self.servidor}\nCantidad: {self.cantidad:,}g\nFacción: {self.faccion}\nEntrega: {self.entrega}\nPrecio: ${self.precio_total:.2f} USD\n"
+embed_pago.add_field(name="Resumen de compra", value=resumen, inline=False)
+vista_accion = AccionPagoCompraView(
+self.usuario,
+self.juego,
+self.servidor,
+self.cantidad,
+self.faccion,
+self.entrega,
+self.precio_total,
+"Binance",
+self.precio_total,
+self.mensaje_original
+)
+await interaction.response.edit_message(embed=embed_pago, view=vista_accion)
+
+async def paypal_callback(self, interaction: discord.Interaction):
+metodo_data = config_metodos_pago.get("paypal", {})
+if not metodo_data.get("activo", True):
+await interaction.response.send_message("Este método de pago no está disponible.", ephemeral=True)
+return
+comision_porcentaje = metodo_data.get("comision_porcentaje", 5.4)
+comision_fija = metodo_data.get("comision_fija", 0.30)
+monto_base = self.precio_total
+monto_total = (monto_base + comision_fija) / (1 - (comision_porcentaje / 100))
+comision = monto_total - monto_base
+embed_pago = discord.Embed(
+title="PAGO CON PAYPAL",
+description="Escanea el código QR para realizar el pago",
+color=discord.Color.blue()
+)
+embed_pago.set_thumbnail(url=metodo_data.get("qr", ""))
+if metodo_data.get("mensaje", ""):
+embed_pago.add_field(name="IMPORTANTE", value=metodo_data.get("mensaje"), inline=False)
+embed_pago.add_field(name="MONTO A PAGAR", value=f"${monto_total:.2f} USD", inline=False)
+embed_pago.add_field(name="Comisión PayPal", value=f"${comision:.2f} USD\n({comision_porcentaje}% + ${comision_fija:.2f})", inline=True)
+embed_pago.add_field(name="Monto base", value=f"${monto_base:.2f} USD", inline=True)
+resumen = f"\nJuego: {self.juego}\nServidor: {self.servidor}\nCantidad: {self.cantidad:,}g\nFacción: {self.faccion}\nEntrega: {self.entrega}\nPrecio: ${self.precio_total:.2f} USD\n"
+embed_pago.add_field(name="Resumen de compra", value=resumen, inline=False)
+vista_accion = AccionPagoCompraView(
+self.usuario,
+self.juego,
+self.servidor,
+self.cantidad,
+self.faccion,
+self.entrega,
+self.precio_total,
+"Paypal",
+monto_total,
+self.mensaje_original,
+comision
+)
+await interaction.response.edit_message(embed=embed_pago, view=vista_accion)
+
+async def pago_movil_callback(self, interaction: discord.Interaction):
+metodo_data = config_metodos_pago.get("pagomovil", {})
+if not metodo_data.get("activo", True):
+await interaction.response.send_message("Este método de pago no está disponible.", ephemeral=True)
+return
+tasa = metodo_data.get("tasa", 659.00)
+monto_bs = self.precio_total * tasa
+embed_pago = discord.Embed(
+title="PAGO MÓVIL",
+description="Realiza el pago móvil con los siguientes datos",
+color=discord.Color.green()
+)
+embed_pago.set_thumbnail(url=metodo_data.get("qr", ""))
+datos_texto = f"Banco: {metodo_data.get('banco', 'No disponible')}\n"
+datos_texto += f"Cédula: {metodo_data.get('ci', 'No disponible')}\n"
+datos_texto += f"Teléfono: {metodo_data.get('telefono', 'No disponible')}"
+embed_pago.add_field(name="DATOS DE PAGO", value=datos_texto, inline=False)
+embed_pago.add_field(name="TOTAL A PAGAR", value=f"${self.precio_total:.2f} USD", inline=False)
+embed_pago.add_field(name="TOTAL EN BOLÍVARES", value=f"Bs {monto_bs:,.2f}\n(Tasa: Bs {tasa:,.2f})", inline=False)
+resumen = f"\nJuego: {self.juego}\nServidor: {self.servidor}\nCantidad: {self.cantidad:,}g\nFacción: {self.faccion}\nEntrega: {self.entrega}\nPrecio: ${self.precio_total:.2f} USD\n"
+embed_pago.add_field(name="Resumen de compra", value=resumen, inline=False)
+vista_accion = AccionPagoCompraView(
+self.usuario,
+self.juego,
+self.servidor,
+self.cantidad,
+self.faccion,
+self.entrega,
+self.precio_total,
+"Pago Móvil",
+self.precio_total,
+self.mensaje_original,
+0,
+monto_bs,
+tasa
+)
+await interaction.response.edit_message(embed=embed_pago, view=vista_accion)
+
+async def consulta_callback(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 CARGANDO...",
+description="Estamos preparando tu consulta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+embed_cargando.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed_cargando.timestamp = discord.utils.utcnow()
+
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+await manejar_consulta_universal(interaction.user, self.mensaje_original)
+
+embed_consulta = discord.Embed(
+title="📬 CONSULTA ENVIADA",
+description="Tu consulta ha sido enviada a los administradores. Te responderán a la brevedad.\n\nGracias por confiar en CarryLoot.",
+color=discord.Color.blue()
+)
+embed_consulta.timestamp = discord.utils.utcnow()
+
+await interaction.edit_original_response(embed=embed_consulta, view=None)
+
+async def inicio_callback(self, interaction: discord.Interaction):
+embed = discord.Embed(
+title="Servicios CarryLoot",
+description=configuracion["descripcion"],
+color=discord.Color.blue()
+)
+if configuracion["thumbnail"]:
+embed.set_thumbnail(url=configuracion["thumbnail"])
+if configuracion["imagen_final"]:
+embed.set_image(url=configuracion["imagen_final"])
+embed.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed.timestamp = discord.utils.utcnow()
+nueva_vista = ServiciosView(embed, self.mensaje_original if hasattr(self, 'mensaje_original') else None)
+await interaction.response.edit_message(embed=embed, view=nueva_vista)
+
+class AccionPagoCompraView(discord.ui.View):
+def init(self, usuario, juego, servidor, cantidad, faccion, entrega, precio_total, metodo_pago, monto_total, mensaje_original, comision=0, monto_bs=0, tasa=0):
+super().init(timeout=300)
+self.usuario = usuario
+self.juego = juego
+self.servidor = servidor
+self.cantidad = cantidad
+self.faccion = faccion
+self.entrega = entrega
+self.precio_total = precio_total
+self.metodo_pago = metodo_pago
+self.monto_total = monto_total
+self.mensaje_original = mensaje_original
+self.comision = comision
+self.monto_bs = monto_bs
+self.tasa = tasa
+self.boton_completar = discord.ui.Button(label="SI, YA PAGUÉ", style=discord.ButtonStyle.success, row=0)
+self.boton_consulta = discord.ui.Button(label="CONSULTA", style=discord.ButtonStyle.secondary, row=0)
+self.boton_inicio = discord.ui.Button(label="INICIO", style=discord.ButtonStyle.secondary, row=0)
+self.boton_completar.callback = self.completar_callback
+self.boton_consulta.callback = self.consulta_callback
+self.boton_inicio.callback = self.inicio_callback
+self.add_item(self.boton_completar)
+self.add_item(self.boton_consulta)
+self.add_item(self.boton_inicio)
+
+async def completar_callback(self, interaction: discord.Interaction):
+modal = NombrePersonajeModalCompra(self)
+await interaction.response.send_modal(modal)
+
+async def consulta_callback(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 CARGANDO...",
+description="Estamos preparando tu consulta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+embed_cargando.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed_cargando.timestamp = discord.utils.utcnow()
+
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+await manejar_consulta_universal(interaction.user, self.mensaje_original)
+
+embed_consulta = discord.Embed(
+title="📬 CONSULTA ENVIADA",
+description="Tu consulta ha sido enviada a los administradores. Te responderán a la brevedad.\n\nGracias por confiar en CarryLoot.",
+color=discord.Color.blue()
+)
+embed_consulta.timestamp = discord.utils.utcnow()
+
+await interaction.edit_original_response(embed=embed_consulta, view=None)
+
+async def inicio_callback(self, interaction: discord.Interaction):
+embed = discord.Embed(
+title="Servicios CarryLoot",
+description=configuracion["descripcion"],
+color=discord.Color.blue()
+)
+if configuracion["thumbnail"]:
+embed.set_thumbnail(url=configuracion["thumbnail"])
+if configuracion["imagen_final"]:
+embed.set_image(url=configuracion["imagen_final"])
+embed.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed.timestamp = discord.utils.utcnow()
+nueva_vista = ServiciosView(embed, self.mensaje_original if hasattr(self, 'mensaje_original') else None)
+await interaction.response.edit_message(embed=embed, view=nueva_vista)
+
+class VistaPreciosServidor(discord.ui.View):
+def init(self, juego, mensaje_original):
+super().init(timeout=300)
+self.juego = juego
+self.mensaje_original = mensaje_original
+self.servidor_seleccionado = None
+opciones_servidor = []
+if juego in inventario_wow:
+for servidor, facciones in inventario_wow[juego].items():
+tiene_stock_venta = False
+tiene_stock_compra = False
+for faccion, datos in facciones.items():
+if datos.get("stock_vender", 0) > 0:
+tiene_stock_venta = True
+if datos.get("stock_comprar", 0) > 0:
+tiene_stock_compra = True
+if tiene_stock_venta or tiene_stock_compra:
+opciones_servidor.append(discord.SelectOption(label=servidor[:100], value=servidor))
+if not opciones_servidor:
+opciones_servidor = [discord.SelectOption(label="No hay servidores disponibles", value="none", default=True)]
+self.servidor_select = discord.ui.Select(placeholder="Selecciona un servidor", options=opciones_servidor)
+self.servidor_select.callback = self.select_servidor
+self.add_item(self.servidor_select)
+self.boton_comprar = discord.ui.Button(label="COMPRAR ORO", style=discord.ButtonStyle.success, disabled=True)
+self.boton_vender = discord.ui.Button(label="VENDER ORO", style=discord.ButtonStyle.danger, disabled=True)
+self.boton_consulta = discord.ui.Button(label="CONSULTA", style=discord.ButtonStyle.primary, disabled=False)
+self.boton_inicio = discord.ui.Button(label="INICIO", style=discord.ButtonStyle.secondary)
+self.boton_comprar.callback = self.comprar_callback
+self.boton_vender.callback = self.vender_callback
+self.boton_consulta.callback = self.consulta_callback
+self.boton_inicio.callback = self.inicio_callback
+self.add_item(self.boton_comprar)
+self.add_item(self.boton_vender)
+self.add_item(self.boton_consulta)
+self.add_item(self.boton_inicio)
+
+async def select_servidor(self, interaction: discord.Interaction):
+await interaction.response.defer()
+if self.servidor_select.values[0] == "none":
+await interaction.followup.send("No hay servidores disponibles.", ephemeral=True)
+return
+self.servidor_seleccionado = self.servidor_select.values[0]
+for option in self.servidor_select.options:
+if option.value == self.servidor_seleccionado:
+self.servidor_select.placeholder = f"Servidor: {option.label}"
+break
+
+embed = discord.Embed(
+title=f"Oro para {self.juego}",
+description=config_servicio["oro"]["descripcion"] if config_servicio["oro"]["descripcion"] else "Selecciona el servidor para consultar los precios actualizados.\nPrecios competitivos | Atención 24/7 | Respuesta inmediata",
+color=discord.Color.blue()
+)
+if config_servicio["oro"]["thumbnail"]:
+embed.set_thumbnail(url=config_servicio["oro"]["thumbnail"])
+if config_servicio["oro"]["imagen_final"]:
+embed.set_image(url=config_servicio["oro"]["imagen_final"])
+
+lineas_servidor = [f"{self.servidor_seleccionado}"]
+for faccion, datos in inventario_wow[self.juego][self.servidor_seleccionado].items():
+stock_vender = datos.get("stock_vender", 0)
+stock_comprar = datos.get("stock_comprar", 0)
+precio_vender = calcular_precio_dinamico(self.juego, self.servidor_seleccionado, faccion, stock_vender, "vender")
+precio_comprar = calcular_precio_dinamico(self.juego, self.servidor_seleccionado, faccion, stock_comprar, "comprar")
+formato = datos.get("formato", "100g")
+info = f"▸ {faccion}: "
+if stock_vender > 0:
+info += f"Vendemos ${precio_vender:.2f} x {formato} "
+if stock_comprar > 0:
+info += f"| Compramos ${precio_comprar:.2f} x {formato}"
+if stock_vender == 0 and stock_comprar == 0:
+info += "NO DISPONIBLE"
+lineas_servidor.append(info)
+embed.add_field(name="Servidor seleccionado", value="\n".join(lineas_servidor), inline=False)
+
+metodos_pago_lista = ["Binance", "PayPal", "Pago Móvil"]
+metodos_texto = "\n".join([f"• {metodo}" for metodo in metodos_pago_lista])
+embed.add_field(name="Métodos de pago", value=metodos_texto, inline=False)
+embed.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed.timestamp = discord.utils.utcnow()
+
+hay_stock_venta = False
+hay_stock_compra = False
+for datos in inventario_wow[self.juego][self.servidor_seleccionado].values():
+if datos.get("stock_vender", 0) > 0:
+hay_stock_venta = True
+if datos.get("stock_comprar", 0) > 0:
+hay_stock_compra = True
+self.boton_comprar.disabled = not hay_stock_venta
+self.boton_vender.disabled = not hay_stock_compra
+await interaction.edit_original_response(embed=embed, view=self)
+
+async def comprar_callback(self, interaction: discord.Interaction):
+if not self.servidor_seleccionado:
+await interaction.response.send_message("Primero selecciona un servidor.", ephemeral=True)
+return
+formulario = FormularioCompraView("COMPRA DE ORO", interaction.user, self.juego, self.mensaje_original)
+
+embed_form = discord.Embed(
+title="FORMULARIO DE COMPRA",
+description=config_servicio["compra"]["descripcion"] if config_servicio["compra"]["descripcion"] else f"Completa los datos para COMPRAR ORO en {self.juego}",
+color=discord.Color.green()
+)
+if config_servicio["compra"]["thumbnail"]:
+embed_form.set_thumbnail(url=config_servicio["compra"]["thumbnail"])
+if config_servicio["compra"]["imagen_final"]:
+embed_form.set_image(url=config_servicio["compra"]["imagen_final"])
+embed_form.set_footer(text="Tienes 5 minutos")
+await interaction.response.edit_message(embed=embed_form, view=formulario)
+
+async def vender_callback(self, interaction: discord.Interaction):
+if not self.servidor_seleccionado:
+await interaction.response.send_message("Primero selecciona un servidor.", ephemeral=True)
+return
+formulario = FormularioVentaView("VENTA DE ORO", interaction.user, self.juego, self.mensaje_original)
+
+embed_form = discord.Embed(
+title="FORMULARIO DE VENTA",
+description=config_servicio["venta"]["descripcion"] if config_servicio["venta"]["descripcion"] else f"Completa los datos para VENDER ORO en {self.juego}",
+color=discord.Color.blue()
+)
+if config_servicio["venta"]["thumbnail"]:
+embed_form.set_thumbnail(url=config_servicio["venta"]["thumbnail"])
+if config_servicio["venta"]["imagen_final"]:
+embed_form.set_image(url=config_servicio["venta"]["imagen_final"])
+embed_form.set_footer(text="Tienes 5 minutos")
+await interaction.response.edit_message(embed=embed_form, view=formulario)
+
+async def consulta_callback(self, interaction: discord.Interaction):
+embed_cargando = discord.Embed(
+title="🔄 CARGANDO...",
+description="Estamos preparando tu consulta.\nEsto puede tomar unos segundos...",
+color=discord.Color.blue()
+)
+embed_cargando.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed_cargando.timestamp = discord.utils.utcnow()
+
+await interaction.response.edit_message(embed=embed_cargando, view=None)
+
+await manejar_consulta_universal(interaction.user, self.mensaje_original)
+
+embed_consulta = discord.Embed(
+title="📬 CONSULTA ENVIADA",
+description="Tu consulta ha sido enviada a los administradores. Te responderán a la brevedad.\n\nGracias por confiar en CarryLoot.",
+color=discord.Color.blue()
+)
+embed_consulta.timestamp = discord.utils.utcnow()
+
+await interaction.edit_original_response(embed=embed_consulta, view=None)
+
+async def inicio_callback(self, interaction: discord.Interaction):
+embed = discord.Embed(
+title="Servicios CarryLoot",
+description=configuracion["descripcion"],
+color=discord.Color.blue()
+)
+if configuracion["thumbnail"]:
+embed.set_thumbnail(url=configuracion["thumbnail"])
+if configuracion["imagen_final"]:
+embed.set_image(url=configuracion["imagen_final"])
+embed.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed.timestamp = discord.utils.utcnow()
+nueva_vista = ServiciosView(embed, self.mensaje_original if hasattr(self, 'mensaje_original') else None)
+await interaction.response.edit_message(embed=embed, view=nueva_vista)
+
+===== FUNCIÓN PRINCIPAL PARA MOSTRAR INTERFAZ DE ORO =====
+async def mostrar_interfaz_oro(interaction, juego, mensaje_original=None):
+"""Función principal que se llama desde el bot principal cuando se selecciona Oro"""
+await leer_toda_configuracion_wow()
+
+if juego not in inventario_wow:
+embed = discord.Embed(
+title="Error",
+description=f"No hay información disponible para {juego}.",
+color=discord.Color.red()
+)
+if mensaje_original:
+await mensaje_original.edit(embed=embed, view=None)
+else:
+await interaction.response.edit_message(embed=embed, view=None)
+return
+
+embed = discord.Embed(
+title=f"Oro para {juego}",
+description=config_servicio["oro"]["descripcion"] if config_servicio["oro"]["descripcion"] else "Selecciona el servidor para consultar los precios actualizados.\nPrecios competitivos | Atención 24/7 | Respuesta inmediata",
+color=discord.Color.blue()
+)
+
+if config_servicio["oro"]["thumbnail"]:
+embed.set_thumbnail(url=config_servicio["oro"]["thumbnail"])
+if config_servicio["oro"]["imagen_final"]:
+embed.set_image(url=config_servicio["oro"]["imagen_final"])
+
+servidores_disponibles = []
+for servidor, facciones in inventario_wow[juego].items():
+tiene_stock = False
+for faccion, datos in facciones.items():
+if datos.get("stock_vender", 0) > 0 or datos.get("stock_comprar", 0) > 0:
+tiene_stock = True
+break
+if tiene_stock:
+servidores_disponibles.append(f"• {servidor}")
+
+if servidores_disponibles:
+embed.add_field(name="Servidores disponibles", value="\n".join(servidores_disponibles), inline=False)
+else:
+embed.add_field(name="Servidores disponibles", value="No hay servidores disponibles en este momento.", inline=False)
+
+metodos_pago_lista = ["Binance", "PayPal", "Pago Móvil"]
+metodos_texto = "\n".join([f"• {metodo}" for metodo in metodos_pago_lista])
+embed.add_field(name="Métodos de pago", value=metodos_texto, inline=False)
+embed.set_footer(text=f"Solicitado por {interaction.user.name}")
+embed.timestamp = discord.utils.utcnow()
+
+vista = VistaPreciosServidor(juego, mensaje_original if mensaje_original else interaction.message)
+
+if mensaje_original:
+await mensaje_original.edit(embed=embed, view=vista)
+else:
+await interaction.response.edit_message(embed=embed, view=vista)
+
+async def leer_toda_configuracion_wow():
+global servicios_wow, inventario_wow
+await leer_configuracion_servicio()
+await leer_nombres_aleatorios()
+await leer_servicios_wow()
+await leer_mensajes_feed()
+await leer_configuracion_metodos_pago()
+for servicio in servicios_wow:
+await leer_configuracion_wow(servicio)
+print("Configuración WoW actualizada.")
+
+===== EVENTOS PARA DM CON SOPORTE PARA IMÁGENES (se añaden al bot principal) =====
+Estos eventos se añaden automáticamente al bot cuando se ejecuta el código
+Nota: on_message y otros eventos ya están definidos en el bot principal
+Solo añadimos la función de manejo de DMs que se integrará
+Función adicional para manejar respuestas de admin (será llamada desde on_message del bot principal)
+async def manejar_mensajes_admin(message):
+
+Esta función se integrará en el on_message del bot principal
+pass
