@@ -1,3 +1,4 @@
+===== turtlewow.txt - CÓDIGO COMPLETO PARA SUBIR A https://carryloot.xyz/turtlewow.txt =====
 ===== TURTLE WOW COMPRA/VENTA =====
 ===== CONFIGURACIÓN WOW =====
 ADMIN_IDS = [442921280954433536, 446359515839856641]
@@ -2092,3 +2093,5 @@ async def manejar_mensajes_admin(message):
 
 Esta función se integrará en el on_message del bot principal
 pass
+
+El código de gráfico de velas se omite intencionalmente para mantener el archivo enfocado en transacciones
