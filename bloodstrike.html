@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+
+
+<!-- Torneo Blood Strike - CarryLoot | 1 Kill = $1 USD | Sin Respawn | Webhook Discord Integrado -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+    
+    <title>Torneo Blood Strike | 1 Kill = $1 USD - CarryLoot</title>
+    <meta name="description" content="Torneo oficial de Blood Strike. 1 Kill = $1 USD. Inscripción $1.5. Modo individual sin respawn.">
+    <meta name="keywords" content="torneo blood strike, blood strike tournament, 1 kill 1 dolar, carryloot">
+    <meta name="author" content="CarryLoot">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        .tournament-badge {
+            background: linear-gradient(135deg, #FF3B3B 0%, #C41E3A 100%);
+            box-shadow: 0 0 15px rgba(255, 59, 59, 0.5);
+        }
+        .kill-reward-card {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(220, 38, 38, 0.4);
+            transition: all 0.3s ease;
+        }
+        .kill-reward-card:hover {
+            transform: translateY(-5px);
+            border-color: #ef4444;
+        }
+        .btn-blood {
+            background: linear-gradient(95deg, #DC2626 0%, #B91C1C 100%);
+            border: none;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+        }
+        .btn-blood:hover {
+            transform: scale(1.02);
+            background: linear-gradient(95deg, #EF4444 0%, #DC2626 100%);
+        }
+        .no-respawn-badge {
+            background: #991b1b;
+            color: white;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+        .winner-card {
+            background: rgba(0,0,0,0.5);
+            border-left: 3px solid #ff6b00;
+            transition: all 0.3s ease;
+        }
+        .winner-card:hover {
+            transform: translateY(-5px);
+            border-left-color: #dc2626;
+        }
+        /* Modal de pago flotante */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .payment-modal.active {
+            display: flex;
+        }
+        .payment-modal-content {
+            background: #0a0a0a;
+            border: 1px solid #ff6b00;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px;
+            position: relative;
+        }
+        .payment-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #ff6b00;
+        }
+        .payment-method-item {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #333;
+        }
+        .payment-method-item:hover, .payment-method-item.active {
+            border-color: #ff6b00;
+            background: #222;
+        }
+        .payment-details {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #0f0f0f;
+            border-radius: 12px;
+        }
+        .payment-details.active {
+            display: block;
+        }
+        .country-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #1a1a1a;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .hero-title span {
+            text-shadow: 0 0 10px #dc2626;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .btn-loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            <span></span>
+        </div>
+    </div>
+
+    <!-- cursor effect -->
+    <div class="cursor"></div>
+
+    <!-- Header section simplificado -->
+    <header class="header-section w-100">
+        <div class="py-sm-6 py-3 mx-xxl-20 mx-md-15 mx-3">
+            <div class="d-flex align-items-center justify-content-between gap-xxl-10 gap-lg-8 w-100">
+                <nav class="navbar-custom d-flex gap-lg-6 align-items-center flex-column flex-lg-row justify-content-start justify-content-lg-between w-100">
+                    <div class="top-bar w-100 d-flex align-items-center gap-lg-0 gap-6">
+                        <a class="navbar-brand d-flex align-items-center gap-4" href="index.html">
+                            <img class="w-100 logo1" src="assets/img/favicon.png" alt="favicon">
+                            <img class="w-100 logo2" src="assets/img/logo.png" alt="logo">
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - Blood Strike Torneo -->
+    <section class="hero-section pt-20 pb-120 position-relative" id="hero-blood">
+        <div class="gradient-bg"></div>
+        <div class="gradient-bg2"></div>
+        <div class="star-area">
+            <div class="big-star"><img class="w-100" src="assets/img/big-star.png" alt="star"></div>
+            <div class="small-star"><img class="w-100" src="assets/img/small-star.png" alt="star"></div>
+        </div>
+        <div class="rotate-award"><img class="w-100" src="assets/img/award.png" alt="award"></div>
+        <div class="container pt-120 pb-15">
+            <div class="row g-6 justify-content-between">
+                <div class="col-lg-5 col-md-6 col-sm-8">
+                    <div class="hero-content">
+                        <ul class="d-flex gap-3 fs-2xl fw-semibold heading-font mb-5 list-icon title-anim">
+                            <li>KILL</li><li>EARN</li><li>REPEAT</li>
+                        </ul>
+                        <h1 class="hero-title display-one tcn-1 cursor-scale growUp mb-10">
+                            BLOOD <span class="tcp-1">STRIKE</span><br>KILL TOURNAMENT
+                        </h1>
+                        <a href="#inscription-form" class="btn-half-border position-relative d-inline-block py-2 px-6 bgp-1 rounded-pill">INSCRIBIRSE → $1.5</a>
+                        <p class="mt-4 tcn-6 fs-sm fw-light">Cada kill = $1 USD | Sin límite de kills | Torneo oficial CarryLoot</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-2 col-4 order-md-last order-lg-1">
+                    <div class="hero-banner-area">
+                        <div class="hero-banner-bg"><img class="w-100" src="assets/img/bg-1.png" alt="banner"></div>
+                        <div class="hero-banner-img"><img class="w-100 hero" src="assets/img/hero.png" alt="banner"></div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-5 col-md-6 order-md-1 order-lg-last">
+                    <div class="hero-content">
+                        <div class="card-area py-lg-8 py-6 px-lg-6 px-3 rounded-5 tilt mb-10" data-tilt>
+                            <h3 class="tcn-1 dot-icon cursor-scale growDown mb-6 title-anim">Kill Leaders</h3>
+                            <div class="hr-line mb-6"></div>
+                            <div class="card-items d-grid gap-5">
+                                <div class="card-item d-flex align-items-center gap-4">
+                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/avatar1.png" alt="player"></div>
+                                    <div class="card-info">
+                                        <h4 class="card-title fw-semibold tcn-1 mb-1">SilentSlayer</h4>
+                                        <p class="card-text tcp-1 fw-bold">27 kills | +$27</p>
+                                    </div>
+                                </div>
+                                <div class="hr-line"></div>
+                                <div class="card-item d-flex align-items-center gap-4">
+                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/avatar2.png" alt="player"></div>
+                                    <div class="card-info">
+                                        <h4 class="card-title fw-semibold tcn-1 mb-1">R3ap3r_BS</h4>
+                                        <p class="card-text tcp-1 fw-bold">22 kills | +$22</p>
+                                    </div>
+                                </div>
+                                <div class="hr-line"></div>
+                                <div class="card-item d-flex align-items-center gap-4">
+                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/avatar3.png" alt="player"></div>
+                                    <div class="card-info">
+                                        <h4 class="card-title fw-semibold tcn-1 mb-1">Carnage_BS</h4>
+                                        <p class="card-text tcp-1 fw-bold">19 kills | +$19</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="active-player-list d-grid justify-content-end gap-2">
+                            <ul class="player-lists d-flex align-items-center">
+                                <li class="rounded-circle overflow-hidden me-n6"><img src="assets/img/player1.png" alt="player"></li>
+                                <li class="rounded-circle overflow-hidden me-n6"><img src="assets/img/player2.png" alt="player"></li>
+                                <li class="rounded-circle overflow-hidden me-n6"><img src="assets/img/player3.png" alt="player"></li>
+                                <li class="rounded-circle overflow-hidden me-n6"><img src="assets/img/player4.png" alt="player"></li>
+                                <li class="rounded-circle overflow-hidden me-n6 heading-font fs-xl">99+</li>
+                            </ul>
+                            <span class="d-block tcn-1 dot-icon cursor-scale growDown2 fs-xl text-end">Fighters ready</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-lines overflow-hidden">
+            <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+            <div class="lines"><div class="line-vertical"></div><div class="line-vertical"></div><div class="line-vertical"></div><div class="line-vertical"></div><div class="line-vertical"></div><div class="line-vertical"></div><div class="line-vertical"></div><div class="line-vertical"></div><div class="line-vertical"></div><div class="line-vertical"></div></div>
+        </div>
+    </section>
+
+    <!-- SISTEMA DE RECOMPENSA -->
+    <section class="pt-60 pb-60" id="how-it-works">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-10">
+                <div class="col-lg-8">
+                    <h2 class="display-four tcn-1 title-anim">¿CÓMO FUNCIONA?</h2>
+                    <p class="tcn-6 fs-lg mt-3">Cada eliminación en Blood Strike vale dinero real. Sin límite de ganancias.</p>
+                </div>
+            </div>
+            <div class="row g-5">
+                <div class="col-md-4">
+                    <div class="kill-reward-card p-5 rounded-4 text-center">
+                        <div class="fs-1 tcp-1 fw-bold">$1 USD</div>
+                        <div class="fs-2xl mt-2">por kill</div>
+                        <p class="mt-3 tcn-1">Cada eliminación confirmada suma $1 a tu cuenta. Acumula sin tope.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="kill-reward-card p-5 rounded-4 text-center">
+                        <div class="fs-1 tcp-1 fw-bold">SIN RESPAWN</div>
+                        <div class="fs-2xl mt-2">modo individual</div>
+                        <p class="mt-3 tcn-1">Si mueres, quedas eliminado. Juega con estrategia y habilidad.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="kill-reward-card p-5 rounded-4 text-center">
+                        <div class="fs-1 tcp-1 fw-bold">$1.5</div>
+                        <div class="fs-2xl mt-2">inscripción</div>
+                        <p class="mt-3 tcn-1">Pago único vía CarryLoot. Seguro, rápido y transparente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRÓXIMOS TORNEOS -->
+    <section class="tournament-section pb-120" id="tournament-hero">
+        <div class="diamond-area"><img class="w-100" src="assets/img/diamond.png" alt="diamond"></div>
+        <div class="red-ball top-50"></div>
+        <div class="tournament-wrapper">
+            <div class="tournament-wrapper-border">
+                <div class="container pt-120 pb-120">
+                    <div class="row justify-content-between align-items-center gy-sm-0 gy-4 mb-15">
+                        <div class="col-md-8 col-sm-8">
+                            <h2 class="display-four tcn-1 cursor-scale growUp title-anim">PRÓXIMOS TORNEOS</h2>
+                            <span class="no-respawn-badge mt-2">MODO INDIVIDUAL - SIN RESPAWN</span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between align-items-center g-6">
+                        <div class="col-xl-4 col-md-6">
+                            <div class="tournament-card p-xl-4 p-3 bgn-4">
+                                <div class="tournament-img mb-8 position-relative">
+                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/tournament1.png" alt="tournament"></div>
+                                    <span class="card-status position-absolute start-0 py-2 px-6 tcn-1 fs-sm"><span class="dot-icon alt-icon ps-3">En Juego</span></span>
+                                </div>
+                                <div class="tournament-content px-xl-4 px-sm-2">
+                                    <div class="tournament-info mb-5">
+                                        <h4 class="tournament-title tcn-1 mb-1">Blood Strike: Lobby Élite</h4>
+                                        <span class="tcn-6 fs-sm">Torneo Individual - Sin Respawn</span>
+                                    </div>
+                                    <div class="hr-line line3"></div>
+                                    <div class="card-info d-flex align-items-center gap-3 flex-wrap my-5">
+                                        <div class="price-money bgn-3 d-flex align-items-center gap-3 py-2 px-3">
+                                            <span class="tcn-1 fw-bold">1 Kill = $1</span>
+                                        </div>
+                                        <div class="ticket-fee bgn-3 d-flex align-items-center gap-1 py-2 px-3">
+                                            <i class="ti ti-ticket fs-base tcp-2"></i>
+                                            <span class="tcn-1 fs-sm">Inscripción $1.5</span>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line line3"></div>
+                                    <div class="card-more-info d-between mt-6">
+                                        <div class="teams-info d-between gap-xl-5 gap-3">
+                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">20/20 Jugadores</span></div>
+                                        </div>
+                                        <a href="#inscription-form" class="btn2"><i class="ti ti-arrow-right fs-2xl"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6">
+                            <div class="tournament-card p-xl-4 p-3 bgn-4">
+                                <div class="tournament-img mb-8 position-relative">
+                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/tournament2.png" alt="tournament"></div>
+                                    <span class="card-status position-absolute start-0 py-2 px-6 tcn-1 fs-sm"><span class="dot-icon alt-icon ps-3">Próximamente</span></span>
+                                </div>
+                                <div class="tournament-content px-xl-4 px-sm-2">
+                                    <div class="tournament-info mb-5">
+                                        <h4 class="tournament-title tcn-1 mb-1">Blood Strike: Masacre</h4>
+                                        <span class="tcn-6 fs-sm">Torneo Individual - Sin Respawn</span>
+                                    </div>
+                                    <div class="hr-line line3"></div>
+                                    <div class="card-info d-flex align-items-center gap-3 flex-wrap my-5">
+                                        <div class="price-money bgn-3 d-flex align-items-center gap-3 py-2 px-3">
+                                            <span class="tcn-1 fw-bold">1 Kill = $1</span>
+                                        </div>
+                                        <div class="ticket-fee bgn-3 d-flex align-items-center gap-1 py-2 px-3">
+                                            <i class="ti ti-ticket fs-base tcp-2"></i>
+                                            <span class="tcn-1 fs-sm">Inscripción $1.5</span>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line line3"></div>
+                                    <div class="card-more-info d-between mt-6">
+                                        <div class="teams-info d-between gap-xl-5 gap-3">
+                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">50/50 Jugadores</span></div>
+                                        </div>
+                                        <a href="#inscription-form" class="btn2"><i class="ti ti-arrow-right fs-2xl"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6">
+                            <div class="tournament-card p-xl-4 p-3 bgn-4">
+                                <div class="tournament-img mb-8 position-relative">
+                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/tournament3.png" alt="tournament"></div>
+                                    <span class="card-status position-absolute start-0 py-2 px-6 tcn-1 fs-sm"><span class="dot-icon alt-icon ps-3">Próximamente</span></span>
+                                </div>
+                                <div class="tournament-content px-xl-4 px-sm-2">
+                                    <div class="tournament-info mb-5">
+                                        <h4 class="tournament-title tcn-1 mb-1">Blood Strike: Legión</h4>
+                                        <span class="tcn-6 fs-sm">Torneo Individual - Sin Respawn</span>
+                                    </div>
+                                    <div class="hr-line line3"></div>
+                                    <div class="card-info d-flex align-items-center gap-3 flex-wrap my-5">
+                                        <div class="price-money bgn-3 d-flex align-items-center gap-3 py-2 px-3">
+                                            <span class="tcn-1 fw-bold">1 Kill = $1</span>
+                                        </div>
+                                        <div class="ticket-fee bgn-3 d-flex align-items-center gap-1 py-2 px-3">
+                                            <i class="ti ti-ticket fs-base tcp-2"></i>
+                                            <span class="tcn-1 fs-sm">Inscripción $1.5</span>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line line3"></div>
+                                    <div class="card-more-info d-between mt-6">
+                                        <div class="teams-info d-between gap-xl-5 gap-3">
+                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">100/100 Jugadores</span></div>
+                                        </div>
+                                        <a href="#inscription-form" class="btn2"><i class="ti ti-arrow-right fs-2xl"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Inscripción -->
+    <section class="pt-60 pb-120" id="inscription-form">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="bgn-4 rounded-5 p-4 p-md-8">
+                        <h2 class="display-five tcn-1 text-center mb-4">INSCRÍBETE AL TORNEO</h2>
+                        <p class="text-center tcn-6 mb-5">Costo único: <strong class="tcp-1 fs-xl">$1.5 USD</strong> por jugador.</p>
+                        <form id="registrationForm">
+                            <div class="single-input mb-4"><input type="text" placeholder="Nombre de usuario / Gamertag" required id="gamertag"></div>
+                            
+                            <div class="mb-4">
+                                <label class="tcn-1 mb-2 d-block">Número de contacto</label>
+                                <div class="country-selector">
+                                    <select id="countryCode" style="background: #1a1a1a; color: white; padding: 10px; border-radius: 8px; border: 1px solid #333;">
+                                        <option value="+58">🇻🇪 +58 (Venezuela)</option>
+                                        <option value="+1">🇺🇸 +1 (EE.UU)</option>
+                                        <option value="+34">🇪🇸 +34 (España)</option>
+                                        <option value="+52">🇲🇽 +52 (México)</option>
+                                        <option value="+57">🇨🇴 +57 (Colombia)</option>
+                                        <option value="+54">🇦🇷 +54 (Argentina)</option>
+                                        <option value="+56">🇨🇱 +56 (Chile)</option>
+                                        <option value="+51">🇵🇪 +51 (Perú)</option>
+                                    </select>
+                                    <input type="tel" id="phoneNumber" placeholder="Número de teléfono" style="flex: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 10px; border-radius: 8px;" required>
+                                </div>
+                            </div>
+                            
+                            <div class="single-input mb-4"><input type="text" placeholder="Usuario de TikTok (opcional)" id="tiktokUser"></div>
+                            
+                            <div class="row g-3 mb-5">
+                                <div class="col-md-12">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <label class="custom-checkbox"><input type="checkbox" id="acceptTerms" checked><span class="checkmark"></span></label>
+                                        <span class="tcn-6 fs-sm">Acepto términos del torneo y anti-cheat</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-blood w-100 py-3 rounded-pill fw-bold tcn-1 fs-lg border-0" id="openPaymentBtn">Siguiente - Pagar $1.5</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Pago Flotante -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-modal-content">
+            <span class="payment-modal-close" id="closeModal">&times;</span>
+            <h3 class="tcn-1 text-center mb-4">Métodos de Pago</h3>
+            
+            <div class="payment-method-item" data-method="pago-movil">
+                <div class="d-flex align-items-center justify-content-between">
+                    <span class="tcn-1 fw-bold">🏦 Pago Móvil (Venezuela)</span>
+                    <i class="ti ti-chevron-down tcp-1"></i>
+                </div>
+                <div class="payment-details">
+                    <p class="tcn-6 mb-2">Banco Provincial - Cuenta: 0108</p>
+                    <p class="tcn-6 mb-2"><strong>Teléfono:</strong> 04124487788</p>
+                    <p class="tcn-6 mb-2"><strong>Cédula:</strong> 24999334</p>
+                    <p class="tcn-6 mb-2"><strong>Beneficiario:</strong> CarryLoot</p>
+                </div>
+            </div>
+            
+            <div class="payment-method-item" data-method="crypto">
+                <div class="d-flex align-items-center justify-content-between">
+                    <span class="tcn-1 fw-bold">💰 Crypto Wallet (USDT/USDC)</span>
+                    <i class="ti ti-chevron-down tcp-1"></i>
+                </div>
+                <div class="payment-details">
+                    <p class="tcn-6 mb-2"><strong>Wallet Address (BSC/BNB Chain):</strong></p>
+                    <p class="tcp-1 fs-sm" style="word-break: break-all;">0x20937821847621089329103820193812</p>
+                    <p class="tcn-6 mt-2 fs-sm">Red: BNB Smart Chain (BEP-20)</p>
+                </div>
+            </div>
+            
+            <div class="payment-method-item" data-method="binance">
+                <div class="d-flex align-items-center justify-content-between">
+                    <span class="tcn-1 fw-bold">🟡 Binance ID / Transferencia</span>
+                    <i class="ti ti-chevron-down tcp-1"></i>
+                </div>
+                <div class="payment-details">
+                    <p class="tcn-6 mb-2"><strong>Binance ID / UID:</strong> 213874263</p>
+                    <p class="tcn-6 mb-2"><strong>Email Binance:</strong> carryloot@protonmail.com</p>
+                    <p class="tcn-6 fs-sm">Aceptamos USDT, USDC, BUSD</p>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <label class="tcn-1 mb-2 d-block">Número de referencia / ID de pago</label>
+                <input type="text" id="referenceNumber" class="form-control bg-dark text-white border-secondary" placeholder="Ej: 123456789" style="padding: 12px; border-radius: 8px;" required>
+            </div>
+            
+            <div class="mt-3">
+                <label class="tcn-1 mb-2 d-block">Captura de pantalla (opcional)</label>
+                <input type="file" id="paymentScreenshot" accept="image/*" class="form-control bg-dark text-white border-secondary" style="padding: 8px; border-radius: 8px;">
+                <p class="tcn-6 fs-xs mt-2">Subir un capture ayuda a confirmar tu pago más rápido</p>
+            </div>
+            
+            <button class="btn-blood w-100 py-3 rounded-pill fw-bold mt-4" id="submitPaymentBtn">Confirmar Pago e Inscribirse</button>
+            <p class="tcn-6 fs-xs text-center mt-3">Un administrador se pondrá en contacto contigo para gestionar tu inscripción al torneo</p>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="payment-modal" id="confirmModal" style="z-index: 10000;">
+        <div class="payment-modal-content" style="text-align: center;">
+            <span class="payment-modal-close" id="closeConfirmModal">&times;</span>
+            <div style="font-size: 60px;">✅</div>
+            <h3 class="tcn-1 mt-3">¡Inscripción Enviada!</h3>
+            <p class="tcn-6 mt-3">Tu solicitud ha sido recibida. Un administrador se pondrá en contacto contigo en las próximas horas para confirmar tu participación en el torneo.</p>
+            <button class="btn-blood py-2 px-5 rounded-pill mt-3" id="closeConfirmBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Reglas del Torneo -->
+    <section class="pb-120">
+        <div class="container">
+            <div class="tournament-rules p-5 p-md-8" style="background: rgba(0,0,0,0.6); border-radius: 24px;">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <h2 class="display-five tcn-1 mb-4">REGLAS OFICIALES</h2>
+                        <ul class="list-unstyled d-grid gap-3">
+                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Prohibido hacer trampas = descalificación inmediata</span></li>
+                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Cada kill será verificada por sistema automático</span></li>
+                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Inscripción $1.5 USD - No reembolsable por trampas</span></li>
+                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Modo individual: si mueres, NO REVIVES</span></li>
+                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Premios pagados en 24h vía USDT</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <div class="bg-dark p-4 rounded-4">
+                            <span class="d-block display-four tcp-1">$1 USD / KILL</span>
+                            <span class="tcn-6">Sin límite de ganancia | Sin respawn</span>
+                            <div class="mt-4"><a href="#inscription-form" class="btn-blood btn rounded-pill px-5 py-3 tcn-1 fw-bold">INSCRIBIRME</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS Dependencies -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/gsap.min.js"></script>
+    <script src="assets/js/ScrollTrigger.min.js"></script>
+    <script src="assets/js/lenis.min.js"></script>
+    <script src="assets/js/SplitText.min.js"></script>
+    <script src="assets/js/vanilla-tilt.js"></script>
+    <script src="assets/js/ScrollMagic.min.js"></script>
+    <script src="assets/js/animation.gsap.min.js"></script>
+    <script src="assets/js/gsap-customization.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/magnific-popup.js_1.1.0_jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <script>
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1515378414255603912/LOpviHXpV13tIcCsGr-0i91puqlJwDnhYHmMigu-Xm1VxeLiiTaNxU6CZ8vETH2nZlFC';
+        
+        // Función para enviar datos al webhook de Discord
+        async function sendToDiscord(data, screenshotFile) {
+            const embed = {
+                title: '🎮 NUEVA INSCRIPCIÓN - TORNEO BLOOD STRIKE',
+                color: 0xFF4500,
+                fields: [
+                    { name: '🎮 Gamertag', value: data.gamertag, inline: true },
+                    { name: '📞 Contacto', value: `${data.countryCode} ${data.phoneNumber}`, inline: true },
+                    { name: '🎵 TikTok', value: data.tiktokUser || 'No especificado', inline: true },
+                    { name: '🔢 Referencia de Pago', value: data.referenceNumber, inline: true },
+                    { name: '💵 Monto', value: '$1.5 USD', inline: true },
+                    { name: '🏆 Torneo', value: 'Blood Strike - 1 Kill = $1 USD', inline: false },
+                    { name: '📅 Fecha', value: new Date().toLocaleString('es-ES'), inline: true }
+                ],
+                footer: { text: 'CarryLoot - Torneo Oficial' },
+                timestamp: new Date().toISOString()
+            };
+            
+            const payload = { embeds: [embed] };
+            
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (screenshotFile) {
+                    const formData = new FormData();
+                    formData.append('file', screenshotFile);
+                    await fetch(WEBHOOK_URL, { method: 'POST', body: formData });
+                }
+                return true;
+            } catch (error) {
+                console.error('Error enviando a Discord:', error);
+                return false;
+            }
+        }
+        
+        // Modal de pago
+        const paymentModal = document.getElementById('paymentModal');
+        const confirmModal = document.getElementById('confirmModal');
+        const openBtn = document.getElementById('openPaymentBtn');
+        const closeModal = document.getElementById('closeModal');
+        const closeConfirmModal = document.getElementById('closeConfirmModal');
+        const closeConfirmBtn = document.getElementById('closeConfirmBtn');
+        const submitBtn = document.getElementById('submitPaymentBtn');
+        
+        openBtn.addEventListener('click', () => {
+            const gamertag = document.getElementById('gamertag').value.trim();
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            
+            if (!gamertag) {
+                alert('⚠️ Por favor ingresa tu nombre de usuario');
+                return;
+            }
+            if (!phoneNumber) {
+                alert('⚠️ Por favor ingresa tu número de contacto');
+                return;
+            }
+            paymentModal.classList.add('active');
+        });
+        
+        closeModal.addEventListener('click', () => paymentModal.classList.remove('active'));
+        closeConfirmModal.addEventListener('click', () => confirmModal.classList.remove('active'));
+        closeConfirmBtn.addEventListener('click', () => confirmModal.classList.remove('active'));
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === paymentModal) paymentModal.classList.remove('active');
+            if (e.target === confirmModal) confirmModal.classList.remove('active');
+        });
+        
+        document.querySelectorAll('.payment-method-item').forEach(item => {
+            const details = item.querySelector('.payment-details');
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.payment-details').forEach(d => {
+                    if (d !== details) d.classList.remove('active');
+                });
+                details.classList.toggle('active');
+            });
+        });
+        
+        submitBtn.addEventListener('click', async () => {
+            const refNumber = document.getElementById('referenceNumber').value.trim();
+            if (!refNumber) {
+                alert('⚠️ Por favor ingresa el número de referencia de tu pago');
+                return;
+            }
+            
+            const gamertag = document.getElementById('gamertag').value;
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const tiktokUser = document.getElementById('tiktokUser').value;
+            const screenshotInput = document.getElementById('paymentScreenshot');
+            const screenshotFile = screenshotInput.files[0];
+            
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('btn-loading');
+            
+            const formData = { gamertag, countryCode, phoneNumber, tiktokUser, referenceNumber: refNumber };
+            const success = await sendToDiscord(formData, screenshotFile);
+            
+            if (success) {
+                paymentModal.classList.remove('active');
+                confirmModal.classList.add('active');
+                
+                document.getElementById('registrationForm').reset();
+                document.getElementById('referenceNumber').value = '';
+                document.getElementById('paymentScreenshot').value = '';
+            } else {
+                alert('❌ Error al enviar la inscripción. Por favor intenta de nuevo o contacta a soporte.');
+            }
+            
+            submitBtn.innerHTML = 'Confirmar Pago e Inscribirse';
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('btn-loading');
+        });
+    </script>
+</body>
+</html>
