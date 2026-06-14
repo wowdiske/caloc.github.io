@@ -147,6 +147,45 @@
             opacity: 0.7;
             pointer-events: none;
         }
+        .example-image {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        .example-image img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .example-image p {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #ff6b00;
+        }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+        .required-field::after {
+            content: "*";
+            color: #ff4444;
+            margin-left: 4px;
+        }
+        .total-amount {
+            background: #ff6b0011;
+            border: 1px solid #ff6b00;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .total-amount span {
+            color: #ff6b00;
+            font-weight: bold;
+            font-size: 18px;
+        }
     </style>
 </head>
 
@@ -204,7 +243,7 @@
                 <div class="col-xl-3 col-md-2 col-4 order-md-last order-lg-1">
                     <div class="hero-banner-area">
                         <div class="hero-banner-bg"><img class="w-100" src="assets/img/bg-1.png" alt="banner"></div>
-                        <div class="hero-banner-img"><img class="w-100 hero" src="assets/img/hero.png" alt="banner"></div>
+                        <div class="hero-banner-img"><img class="w-100 hero" src="assets/img/bsimg.png" alt="banner"></div>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-5 col-md-6 order-md-1 order-lg-last">
@@ -214,26 +253,26 @@
                             <div class="hr-line mb-6"></div>
                             <div class="card-items d-grid gap-5">
                                 <div class="card-item d-flex align-items-center gap-4">
-                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/avatar1.png" alt="player"></div>
+                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/bsava.png" alt="player"></div>
                                     <div class="card-info">
                                         <h4 class="card-title fw-semibold tcn-1 mb-1">SilentSlayer</h4>
-                                        <p class="card-text tcp-1 fw-bold">27 kills | +$27</p>
+                                        <p class="card-text tcp-1 fw-bold">8 kills | +$8</p>
                                     </div>
                                 </div>
                                 <div class="hr-line"></div>
                                 <div class="card-item d-flex align-items-center gap-4">
-                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/avatar2.png" alt="player"></div>
+                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/bsava.png" alt="player"></div>
                                     <div class="card-info">
-                                        <h4 class="card-title fw-semibold tcn-1 mb-1">R3ap3r_BS</h4>
-                                        <p class="card-text tcp-1 fw-bold">22 kills | +$22</p>
+                                        <h4 class="card-title fw-semibold tcn-1 mb-1">R3ap3r</h4>
+                                        <p class="card-text tcp-1 fw-bold">5 kills | +$5</p>
                                     </div>
                                 </div>
                                 <div class="hr-line"></div>
                                 <div class="card-item d-flex align-items-center gap-4">
-                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/avatar3.png" alt="player"></div>
+                                    <div class="card-img-area rounded-circle overflow-hidden"><img class="w-100" src="assets/img/bsava.png" alt="player"></div>
                                     <div class="card-info">
-                                        <h4 class="card-title fw-semibold tcn-1 mb-1">Carnage_BS</h4>
-                                        <p class="card-text tcp-1 fw-bold">19 kills | +$19</p>
+                                        <h4 class="card-title fw-semibold tcn-1 mb-1">Carnage</h4>
+                                        <p class="card-text tcp-1 fw-bold">3 kills | +$3</p>
                                     </div>
                                 </div>
                             </div>
@@ -310,7 +349,7 @@
                         <div class="col-xl-4 col-md-6">
                             <div class="tournament-card p-xl-4 p-3 bgn-4">
                                 <div class="tournament-img mb-8 position-relative">
-                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/b1.jpg" alt="tournament"></div>
+                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/tournament1.png" alt="tournament"></div>
                                     <span class="card-status position-absolute start-0 py-2 px-6 tcn-1 fs-sm"><span class="dot-icon alt-icon ps-3">En Juego</span></span>
                                 </div>
                                 <div class="tournament-content px-xl-4 px-sm-2">
@@ -331,7 +370,7 @@
                                     <div class="hr-line line3"></div>
                                     <div class="card-more-info d-between mt-6">
                                         <div class="teams-info d-between gap-xl-5 gap-3">
-                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">20/20 Jugadores</span></div>
+                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">20 Jugadores</span></div>
                                         </div>
                                         <a href="#inscription-form" class="btn2"><i class="ti ti-arrow-right fs-2xl"></i></a>
                                     </div>
@@ -341,7 +380,7 @@
                         <div class="col-xl-4 col-md-6">
                             <div class="tournament-card p-xl-4 p-3 bgn-4">
                                 <div class="tournament-img mb-8 position-relative">
-                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/b2.jpg" alt="tournament"></div>
+                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/tournament2.png" alt="tournament"></div>
                                     <span class="card-status position-absolute start-0 py-2 px-6 tcn-1 fs-sm"><span class="dot-icon alt-icon ps-3">Próximamente</span></span>
                                 </div>
                                 <div class="tournament-content px-xl-4 px-sm-2">
@@ -362,7 +401,7 @@
                                     <div class="hr-line line3"></div>
                                     <div class="card-more-info d-between mt-6">
                                         <div class="teams-info d-between gap-xl-5 gap-3">
-                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">50/50 Jugadores</span></div>
+                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">60 Jugadores</span></div>
                                         </div>
                                         <a href="#inscription-form" class="btn2"><i class="ti ti-arrow-right fs-2xl"></i></a>
                                     </div>
@@ -372,7 +411,7 @@
                         <div class="col-xl-4 col-md-6">
                             <div class="tournament-card p-xl-4 p-3 bgn-4">
                                 <div class="tournament-img mb-8 position-relative">
-                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/b3.jpg" alt="tournament"></div>
+                                    <div class="img-area overflow-hidden"><img class="w-100" src="assets/img/tournament3.png" alt="tournament"></div>
                                     <span class="card-status position-absolute start-0 py-2 px-6 tcn-1 fs-sm"><span class="dot-icon alt-icon ps-3">Próximamente</span></span>
                                 </div>
                                 <div class="tournament-content px-xl-4 px-sm-2">
@@ -393,7 +432,7 @@
                                     <div class="hr-line line3"></div>
                                     <div class="card-more-info d-between mt-6">
                                         <div class="teams-info d-between gap-xl-5 gap-3">
-                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">100/100 Jugadores</span></div>
+                                            <div class="teams d-flex align-items-center gap-1"><i class="ti ti-users fs-base"></i><span class="tcn-6 fs-sm">100 Jugadores</span></div>
                                         </div>
                                         <a href="#inscription-form" class="btn2"><i class="ti ti-arrow-right fs-2xl"></i></a>
                                     </div>
@@ -414,11 +453,29 @@
                     <div class="bgn-4 rounded-5 p-4 p-md-8">
                         <h2 class="display-five tcn-1 text-center mb-4">INSCRÍBETE AL TORNEO</h2>
                         <p class="text-center tcn-6 mb-5">Costo único: <strong class="tcp-1 fs-xl">$1.5 USD</strong> por jugador.</p>
+                        
+                        <!-- IMAGEN DE EJEMPLO: DÓNDE ENCONTRAR TAG E ID -->
+                        <div class="example-image">
+                            <img src="assets/img/tag.png" alt="Ejemplo de dónde encontrar tu TAG y ID en Blood Strike" onerror="this.src='https://via.placeholder.com/500x200?text=Ejemplo:+TAG+y+ID+en+Blood+Strike'">
+                            <p>📌 ¿Dónde encontrar tu TAG y ID de jugador?</p>
+                        </div>
+                        
                         <form id="registrationForm">
-                            <div class="single-input mb-4"><input type="text" placeholder="Nombre de usuario / Gamertag" required id="gamertag"></div>
+                            <!-- TAG -->
+                            <div class="single-input mb-4">
+                                <label class="tcn-1 mb-2 d-block required-field">TAG de jugador (Nombre en el juego)</label>
+                                <input type="text" placeholder="Ej: SilentSlayer#BS" required id="playerTag">
+                            </div>
                             
+                            <!-- ID (solo números) -->
+                            <div class="single-input mb-4">
+                                <label class="tcn-1 mb-2 d-block required-field">ID de jugador (solo números)</label>
+                                <input type="number" placeholder="Ej: 123456789" required id="playerID" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
+                            
+                            <!-- Número de contacto -->
                             <div class="mb-4">
-                                <label class="tcn-1 mb-2 d-block">Número de contacto</label>
+                                <label class="tcn-1 mb-2 d-block required-field">Número de contacto</label>
                                 <div class="country-selector">
                                     <select id="countryCode" style="background: #1a1a1a; color: white; padding: 10px; border-radius: 8px; border: 1px solid #333;">
                                         <option value="+58">🇻🇪 +58 (Venezuela)</option>
@@ -430,20 +487,35 @@
                                         <option value="+56">🇨🇱 +56 (Chile)</option>
                                         <option value="+51">🇵🇪 +51 (Perú)</option>
                                     </select>
-                                    <input type="tel" id="phoneNumber" placeholder="Número de teléfono" style="flex: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 10px; border-radius: 8px;" required>
+                                    <input type="tel" id="phoneNumber" placeholder="Número de teléfono (solo números)" pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                                 </div>
                             </div>
                             
-                            <div class="single-input mb-4"><input type="text" placeholder="Usuario de TikTok (opcional)" id="tiktokUser"></div>
+                            <!-- TikTok opcional -->
+                            <div class="single-input mb-4">
+                                <label class="tcn-1 mb-2 d-block">Usuario de TikTok (opcional)</label>
+                                <input type="text" placeholder="@tiktok_user" id="tiktokUser">
+                            </div>
                             
+                            <!-- Discord opcional -->
+                            <div class="single-input mb-4">
+                                <label class="tcn-1 mb-2 d-block">Usuario de Discord (opcional)</label>
+                                <input type="text" placeholder="Ej: usuario#1234" id="discordUser">
+                            </div>
+                            
+                            <!-- Acepto términos (sin check por defecto) -->
                             <div class="row g-3 mb-5">
                                 <div class="col-md-12">
                                     <div class="d-flex align-items-center gap-3">
-                                        <label class="custom-checkbox"><input type="checkbox" id="acceptTerms" checked><span class="checkmark"></span></label>
-                                        <span class="tcn-6 fs-sm">Acepto términos del torneo y anti-cheat</span>
+                                        <label class="custom-checkbox">
+                                            <input type="checkbox" id="acceptTerms">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <span class="tcn-6 fs-sm">Acepto los términos del torneo y la política anti-cheat <span class="tcp-1">(obligatorio)</span></span>
                                     </div>
                                 </div>
                             </div>
+                            
                             <button type="button" class="btn-blood w-100 py-3 rounded-pill fw-bold tcn-1 fs-lg border-0" id="openPaymentBtn">Siguiente - Pagar $1.5</button>
                         </form>
                     </div>
@@ -458,6 +530,7 @@
             <span class="payment-modal-close" id="closeModal">&times;</span>
             <h3 class="tcn-1 text-center mb-4">Métodos de Pago</h3>
             
+            <!-- Pago Móvil Venezuela -->
             <div class="payment-method-item" data-method="pago-movil">
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="tcn-1 fw-bold">🏦 Pago Móvil (Venezuela)</span>
@@ -465,12 +538,17 @@
                 </div>
                 <div class="payment-details">
                     <p class="tcn-6 mb-2">Banco Provincial - Cuenta: 0108</p>
-                    <p class="tcn-6 mb-2"><strong>Teléfono:</strong> 04124487788</p>
-                    <p class="tcn-6 mb-2"><strong>Cédula:</strong> 24999334</p>
-                    <p class="tcn-6 mb-2"><strong>Beneficiario:</strong> CarryLoot</p>
+                    <p class="tcn-6 mb-2"><strong>Teléfono:</strong> 04245638772</p>
+                    <p class="tcn-6 mb-2"><strong>Cédula:</strong> 21459755</p>
+                    <div class="total-amount">
+                        <p class="tcn-6 mb-1">💰 TASA DEL DÍA: <strong class="tcp-1">Bs. 810.00</strong> por USD</p>
+                        <p class="tcn-1 mb-0">💵 TOTAL A TRANSFERIR: <span>Bs. 1.215,00</span></p>
+                        <p class="tcn-6 fs-xs mt-2">($1.5 USD × Bs. 810.00)</p>
+                    </div>
                 </div>
             </div>
             
+            <!-- Crypto Wallet -->
             <div class="payment-method-item" data-method="crypto">
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="tcn-1 fw-bold">💰 Crypto Wallet (USDT/USDC)</span>
@@ -478,32 +556,34 @@
                 </div>
                 <div class="payment-details">
                     <p class="tcn-6 mb-2"><strong>Wallet Address (BSC/BNB Chain):</strong></p>
-                    <p class="tcp-1 fs-sm" style="word-break: break-all;">0x20937821847621089329103820193812</p>
+                    <p class="tcp-1 fs-sm" style="word-break: break-all;">0x8df2f723b7e4c3cad68b7dff5d6b62bae49eb232</p>
                     <p class="tcn-6 mt-2 fs-sm">Red: BNB Smart Chain (BEP-20)</p>
+                    <p class="tcn-6 fs-sm mt-2">Monto: <strong class="tcp-1">$1.5 USD</strong> en USDT/USDC</p>
                 </div>
             </div>
             
+            <!-- Binance Transferencia -->
             <div class="payment-method-item" data-method="binance">
                 <div class="d-flex align-items-center justify-content-between">
                     <span class="tcn-1 fw-bold">🟡 Binance ID / Transferencia</span>
                     <i class="ti ti-chevron-down tcp-1"></i>
                 </div>
                 <div class="payment-details">
-                    <p class="tcn-6 mb-2"><strong>Binance ID / UID:</strong> 213874263</p>
-                    <p class="tcn-6 mb-2"><strong>Email Binance:</strong> carryloot@protonmail.com</p>
+                    <p class="tcn-6 mb-2"><strong>Binance ID / UID:</strong> 26373702</p>
                     <p class="tcn-6 fs-sm">Aceptamos USDT, USDC, BUSD</p>
+                    <p class="tcn-6 fs-sm mt-2">Monto: <strong class="tcp-1">$1.5 USD</strong></p>
                 </div>
             </div>
             
             <div class="mt-4">
-                <label class="tcn-1 mb-2 d-block">Número de referencia / ID de pago</label>
-                <input type="text" id="referenceNumber" class="form-control bg-dark text-white border-secondary" placeholder="Ej: 123456789" style="padding: 12px; border-radius: 8px;" required>
+                <label class="tcn-1 mb-2 d-block required-field">Número de referencia / ID de pago</label>
+                <input type="text" id="referenceNumber" class="form-control bg-dark text-white border-secondary" placeholder="Ej: 123456789" required>
             </div>
             
             <div class="mt-3">
-                <label class="tcn-1 mb-2 d-block">Captura de pantalla (opcional)</label>
-                <input type="file" id="paymentScreenshot" accept="image/*" class="form-control bg-dark text-white border-secondary" style="padding: 8px; border-radius: 8px;">
-                <p class="tcn-6 fs-xs mt-2">Subir un capture ayuda a confirmar tu pago más rápido</p>
+                <label class="tcn-1 mb-2 d-block required-field">Captura de pantalla del pago</label>
+                <input type="file" id="paymentScreenshot" accept="image/*" class="form-control bg-dark text-white border-secondary" required>
+                <p class="tcn-6 fs-xs mt-2 text-danger">⚠️ Debes subir el comprobante de pago obligatoriamente para poder confirmar tu inscripción.</p>
             </div>
             
             <button class="btn-blood w-100 py-3 rounded-pill fw-bold mt-4" id="submitPaymentBtn">Confirmar Pago e Inscribirse</button>
@@ -531,10 +611,10 @@
                         <h2 class="display-five tcn-1 mb-4">REGLAS OFICIALES</h2>
                         <ul class="list-unstyled d-grid gap-3">
                             <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Prohibido hacer trampas = descalificación inmediata</span></li>
-                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Cada kill será verificada por sistema automático</span></li>
+                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Cada kill será verificada por CarryLoot</span></li>
                             <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Inscripción $1.5 USD - No reembolsable por trampas</span></li>
                             <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Modo individual: si mueres, NO REVIVES</span></li>
-                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Premios pagados en 24h vía USDT</span></li>
+                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Premios pagados al finalizar el torneo via Pago Movil o USDT</span></li>
                         </ul>
                     </div>
                     <div class="col-lg-6 text-center">
@@ -567,21 +647,22 @@
     <script>
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1515378414255603912/LOpviHXpV13tIcCsGr-0i91puqlJwDnhYHmMigu-Xm1VxeLiiTaNxU6CZ8vETH2nZlFC';
         
-        // Función para enviar datos al webhook de Discord
         async function sendToDiscord(data, screenshotFile) {
             const embed = {
                 title: '🎮 NUEVA INSCRIPCIÓN - TORNEO BLOOD STRIKE',
                 color: 0xFF4500,
                 fields: [
-                    { name: '🎮 Gamertag', value: data.gamertag, inline: true },
+                    { name: '🎮 TAG', value: data.playerTag, inline: true },
+                    { name: '🆔 ID de Jugador', value: data.playerID, inline: true },
                     { name: '📞 Contacto', value: `${data.countryCode} ${data.phoneNumber}`, inline: true },
                     { name: '🎵 TikTok', value: data.tiktokUser || 'No especificado', inline: true },
+                    { name: '💬 Discord', value: data.discordUser || 'No especificado', inline: true },
                     { name: '🔢 Referencia de Pago', value: data.referenceNumber, inline: true },
                     { name: '💵 Monto', value: '$1.5 USD', inline: true },
                     { name: '🏆 Torneo', value: 'Blood Strike - 1 Kill = $1 USD', inline: false },
                     { name: '📅 Fecha', value: new Date().toLocaleString('es-ES'), inline: true }
                 ],
-                footer: { text: 'CarryLoot - Torneo Oficial' },
+                footer: { text: 'CarryLoot - Torneo Oficial Blood Strike' },
                 timestamp: new Date().toISOString()
             };
             
@@ -606,7 +687,6 @@
             }
         }
         
-        // Modal de pago
         const paymentModal = document.getElementById('paymentModal');
         const confirmModal = document.getElementById('confirmModal');
         const openBtn = document.getElementById('openPaymentBtn');
@@ -616,15 +696,25 @@
         const submitBtn = document.getElementById('submitPaymentBtn');
         
         openBtn.addEventListener('click', () => {
-            const gamertag = document.getElementById('gamertag').value.trim();
+            const playerTag = document.getElementById('playerTag').value.trim();
+            const playerID = document.getElementById('playerID').value.trim();
             const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const acceptTerms = document.getElementById('acceptTerms').checked;
             
-            if (!gamertag) {
-                alert('⚠️ Por favor ingresa tu nombre de usuario');
+            if (!playerTag) {
+                alert('⚠️ Por favor ingresa tu TAG de jugador');
+                return;
+            }
+            if (!playerID) {
+                alert('⚠️ Por favor ingresa tu ID de jugador (solo números)');
                 return;
             }
             if (!phoneNumber) {
                 alert('⚠️ Por favor ingresa tu número de contacto');
+                return;
+            }
+            if (!acceptTerms) {
+                alert('⚠️ Debes aceptar los términos del torneo para continuar');
                 return;
             }
             paymentModal.classList.add('active');
@@ -651,30 +741,37 @@
         
         submitBtn.addEventListener('click', async () => {
             const refNumber = document.getElementById('referenceNumber').value.trim();
+            const screenshotInput = document.getElementById('paymentScreenshot');
+            const screenshotFile = screenshotInput.files[0];
+            
             if (!refNumber) {
                 alert('⚠️ Por favor ingresa el número de referencia de tu pago');
                 return;
             }
+            if (!screenshotFile) {
+                alert('⚠️ Debes subir el comprobante de pago (captura de pantalla) para confirmar tu inscripción');
+                return;
+            }
             
-            const gamertag = document.getElementById('gamertag').value;
+            const playerTag = document.getElementById('playerTag').value;
+            const playerID = document.getElementById('playerID').value;
             const countryCode = document.getElementById('countryCode').value;
             const phoneNumber = document.getElementById('phoneNumber').value;
             const tiktokUser = document.getElementById('tiktokUser').value;
-            const screenshotInput = document.getElementById('paymentScreenshot');
-            const screenshotFile = screenshotInput.files[0];
+            const discordUser = document.getElementById('discordUser').value;
             
             submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
             submitBtn.disabled = true;
             submitBtn.classList.add('btn-loading');
             
-            const formData = { gamertag, countryCode, phoneNumber, tiktokUser, referenceNumber: refNumber };
+            const formData = { playerTag, playerID, countryCode, phoneNumber, tiktokUser, discordUser, referenceNumber: refNumber };
             const success = await sendToDiscord(formData, screenshotFile);
             
             if (success) {
                 paymentModal.classList.remove('active');
                 confirmModal.classList.add('active');
-                
                 document.getElementById('registrationForm').reset();
+                document.getElementById('acceptTerms').checked = false;
                 document.getElementById('referenceNumber').value = '';
                 document.getElementById('paymentScreenshot').value = '';
             } else {
