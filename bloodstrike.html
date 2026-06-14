@@ -186,6 +186,51 @@
             font-weight: bold;
             font-size: 18px;
         }
+        /* Estilos para reglas profesionales */
+        .rules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .rule-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            padding: 20px;
+            border-left: 4px solid #ff6b00;
+            transition: all 0.3s ease;
+        }
+        .rule-card:hover {
+            transform: translateY(-3px);
+            background: rgba(0, 0, 0, 0.7);
+            border-left-color: #dc2626;
+        }
+        .rule-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ff6b00;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rule-text {
+            color: #cccccc;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .rules-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .rules-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .rules-header p {
+            color: #ff6b00;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 
@@ -464,7 +509,7 @@
                             <!-- TAG -->
                             <div class="single-input mb-4">
                                 <label class="tcn-1 mb-2 d-block required-field">TAG de jugador (Nombre en el juego)</label>
-                                <input type="text" placeholder="Ej: SilentSlayer#BS" required id="playerTag">
+                                <input type="text" placeholder="Ej: CarryStrike" required id="playerTag">
                             </div>
                             
                             <!-- ID (solo números) -->
@@ -576,7 +621,7 @@
             </div>
             
             <div class="mt-4">
-                <label class="tcn-1 mb-2 d-block required-field">Número de referencia / ID de pago</label>
+                <label class="tcn-1 mb-2 d-block required-field">Número de referencia / ID de pago / Cedula</label>
                 <input type="text" id="referenceNumber" class="form-control bg-dark text-white border-secondary" placeholder="Ej: 123456789" required>
             </div>
             
@@ -602,28 +647,129 @@
         </div>
     </div>
 
-    <!-- Reglas del Torneo -->
+    <!-- Reglas del Torneo - Versión Profesional Mejorada -->
     <section class="pb-120">
         <div class="container">
             <div class="tournament-rules p-5 p-md-8" style="background: rgba(0,0,0,0.6); border-radius: 24px;">
-                <div class="row align-items-center g-5">
-                    <div class="col-lg-6">
-                        <h2 class="display-five tcn-1 mb-4">REGLAS OFICIALES</h2>
-                        <ul class="list-unstyled d-grid gap-3">
-                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Prohibido hacer trampas = descalificación inmediata</span></li>
-                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Cada kill será verificada por CarryLoot</span></li>
-                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Inscripción $1.5 USD - No reembolsable por trampas</span></li>
-                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Modo individual: si mueres, NO REVIVES</span></li>
-                            <li><i class="ti ti-circle-check tcp-1 fs-2xl me-3"></i><span class="tcn-1">Premios pagados al finalizar el torneo via Pago Movil o USDT</span></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-6 text-center">
-                        <div class="bg-dark p-4 rounded-4">
-                            <span class="d-block display-four tcp-1">$1 USD / KILL</span>
-                            <span class="tcn-6">Sin límite de ganancia | Sin respawn</span>
-                            <div class="mt-4"><a href="#inscription-form" class="btn-blood btn rounded-pill px-5 py-3 tcn-1 fw-bold">INSCRIBIRME</a></div>
+                <div class="rules-header">
+                    <h2 class="display-five tcn-1 mb-2">📜 REGLAS OFICIALES DEL TORNEO</h2>
+                    <p class="tcn-6">Lee atentamente cada una de las siguientes reglas. El incumplimiento de alguna puede resultar en descalificación.</p>
+                </div>
+                
+                <div class="rules-container">
+                    <!-- Regla 1: Inscripción -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-clipboard-list tcp-1"></i>
+                            <span>1. Inscripción y Datos de Contacto</span>
+                        </div>
+                        <div class="rule-text">
+                            El participante debe completar el formulario de inscripción con todos los datos solicitados (TAG, ID, número de contacto, Discord, TikTok). La información debe ser verídica y actualizada para facilitar la comunicación, coordinación de partidas y el posterior pago de premios.
                         </div>
                     </div>
+                    
+                    <!-- Regla 2: Pago de inscripción -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-wallet tcp-1"></i>
+                            <span>2. Pago de Inscripción</span>
+                        </div>
+                        <div class="rule-text">
+                            La inscripción tiene un costo de <strong>$1.5 USD</strong> (o su equivalente en bolívares según la tasa del día publicada en nuestros métodos de pago). El pago es único y no reembolsable, excepto en caso de que el torneo sea cancelado oficialmente por CarryLoot.
+                        </div>
+                    </div>
+                    
+                    <!-- Regla 3: Sistema de recompensa -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-currency-dollar tcp-1"></i>
+                            <span>3. Sistema de Recompensa por Kill</span>
+                        </div>
+                        <div class="rule-text">
+                            Cada eliminación (kill) confirmada durante el torneo otorgará <strong>$1 USD</strong> al jugador. No hay límite máximo de kills por participante. El monto total a pagar se calcula como: <strong>Número de kills × $1 USD</strong>. Los premios se pagan <strong>AL FINALIZAR EL TORNEO</strong>.
+                        </div>
+                    </div>
+                    
+                    <!-- Regla 4: Verificación obligatoria -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-camera tcp-1"></i>
+                            <span>4. Verificación Obligatoria de Kills</span>
+                        </div>
+                        <div class="rule-text">
+                            Al finalizar tu participación, deberás enviar una <strong>captura de pantalla clara y sin editar</strong> donde se visualice: el contador de kills obtenidas, el TAG o nombre de usuario del jugador y el ID de Blood Strike. Las capturas borrosas, recortadas o manipuladas serán rechazadas, resultando en la pérdida del derecho al pago de las kills no verificadas. El envío debe realizarse luego de <strong>Finalizar el torneo</strong>
+                        </div>
+                    </div>
+                    
+                    <!-- Regla 5: Anti-Cheat y Fair Play -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-shield-lock tcp-1"></i>
+                            <span>5. Anti-Cheat y Juego Limpio</span>
+                        </div>
+                        <div class="rule-text">
+                            <strong>Prohibido hacer trampas:</strong> El uso de cualquier software, exploit, cheat o modificación no autorizada del juego (aimbot, wallhack, speedhack, etc.) será motivo de <strong>descalificación inmediata</strong>, pérdida total del derecho a premio y veto permanente en futuros torneos de CarryLoot. Toda kill será verificada por nuestro equipo.
+                        </div>
+                    </div>
+                    
+                    <!-- Regla 6: Respeto a la comunidad -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-users tcp-1"></i>
+                            <span>6. Respeto a la Comunidad</span>
+                        </div>
+                        <div class="rule-text">
+                            Está prohibido el lenguaje ofensivo, acoso, discriminación, spam o cualquier actitud tóxica hacia otros jugadores, organizadores o staff. La falta de respeto será sancionada con advertencia, descalificación o veto, según la gravedad de la falta.
+                        </div>
+                    </div>
+                    
+                    <!-- Regla 7: Modalidad de juego -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-sword tcp-1"></i>
+                            <span>7. Modalidad de Juego</span>
+                        </div>
+                        <div class="rule-text">
+                            El torneo se juega en <strong>modo individual</strong>. No se permiten equipos ni ayuda externa dentro de la partida. La mecánica principal es <strong>sin respawn</strong>: si un jugador muere, queda automáticamente eliminado del torneo y no podrá continuar generando más kills.
+                        </div>
+                    </div>
+                    
+                    <!-- Regla 8: Comunicación -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-message-circle tcp-1"></i>
+                            <span>8. Comunicación y Coordinación</span>
+                        </div>
+                        <div class="rule-text">
+                            Para optimizar la logística, se recomienda a los inscritos tener disponible su usuario de <strong>Discord</strong> para ser agregados al grupo de coordinación, responder los mensajes de los organizadores dentro de un tiempo razonable (máximo 2 horas) cuando se requiera información para el pago o la invitación a la sala, y mantener actualizados sus medios de contacto.
+                        </div>
+                    </div>
+                    
+                    <!-- Regla 9: Pago de premios -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-credit-card tcp-1"></i>
+                            <span>9. Pago de Premios</span>
+                        </div>
+                        <div class="rule-text">
+                            Una vez finalizado el torneo y verificadas las capturas de kills, los premios se calcularán y pagarán luego de <strong>Finalizar el torneo</strong> posteriores a la verificación. Los métodos de pago disponibles son los publicados en el sitio web (Pago Móvil, USDT/Binance, Crypto Wallet). El participante deberá indicar su método preferido al momento de reclamar.
+                        </div>
+                    </div>
+                    
+                    <!-- Regla 10: Modificaciones -->
+                    <div class="rule-card">
+                        <div class="rule-title">
+                            <i class="ti ti-alert-triangle tcp-1"></i>
+                            <span>10. Modificaciones y Cancelación</span>
+                        </div>
+                        <div class="rule-text">
+                            CarryLoot se reserva el derecho de modificar las reglas antes del inicio del torneo, notificando a los inscritos con antelación. En caso de fuerza mayor o circunstancias imprevistas, el torneo podría ser cancelado, reembolsándose el 100% de la inscripción a los participantes.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-5 pt-3">
+                    <a href="#inscription-form" class="btn-blood btn rounded-pill px-5 py-3 tcn-1 fw-bold">INSCRIBIRME AHORA</a>
                 </div>
             </div>
         </div>
